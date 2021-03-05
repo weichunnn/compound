@@ -60,7 +60,9 @@ class Body extends StatelessWidget {
               children: [
                 PrimaryButton(
                   text: 'Get Started',
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/splash');
+                  },
                 ),
                 SecondaryButton(
                   text: 'Log In',
