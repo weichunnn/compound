@@ -1,13 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
-import '../../size_config.dart';
 import 'components/body.dart';
+import '../../components/link_text.dart';
 
 class SplashScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    SizeConfig().init(context);
     return Scaffold(
+      appBar: AppBar(
+        leadingWidth: 100,
+        leading: LinkText(
+          text: 'Back',
+          onTap: () {
+            Navigator.pushNamed(context, '/');
+          },
+          fontSize: 20,
+        ),
+      ),
       body: Body(),
     );
   }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'screens/splash/splash_screen.dart';
+import 'routes.dart';
 import 'theme.dart';
 
 void main() {
@@ -14,7 +14,8 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Compound',
       theme: theme(),
-      home: SplashScreen(),
+      initialRoute: '/',
+      routes: routes,
     );
   }
 }

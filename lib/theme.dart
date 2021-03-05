@@ -23,7 +23,7 @@ AppBarTheme appBarTheme() {
   return AppBarTheme(
     centerTitle: true,
     iconTheme: IconThemeData(color: kTextColor),
-    color: Colors.transparent,
+    backgroundColor: Colors.transparent,
     elevation: 0,
     textTheme: TextTheme(
       headline6: TextStyle(
