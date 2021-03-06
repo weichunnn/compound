@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../../../size_config.dart';
 import 'splash_content.dart';
-import '../../../components/primary_button.dart';
+import '../../../components/default_button.dart';
 
 class Body extends StatefulWidget {
   @override
@@ -87,7 +87,7 @@ class _BodyState extends State<Body> {
                     ),
                   ),
                   Spacer(flex: 3),
-                  PrimaryButton(
+                  DefaultButton(
                     text: 'Sign Up',
                     onPressed: () {},
                   ),

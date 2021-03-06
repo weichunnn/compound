@@ -3,7 +3,7 @@ import 'package:form_field_validator/form_field_validator.dart';
 
 import '../../../constants.dart';
 import '../../../size_config.dart';
-import '../../../components/primary_button.dart';
+import '../../../components/default_button.dart';
 import '../../../components/link_text.dart';
 
 class FormModel {
@@ -56,7 +56,7 @@ class _SignInFormState extends State<SignInForm> {
               )
             ],
           ),
-          PrimaryButton(
+          DefaultButton(
             text: 'Log In',
             onPressed: () {
               if (_formKey.currentState.validate()) {

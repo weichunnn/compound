@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../size_config.dart';
-import '../../../components/primary_button.dart';
-import '../../../components/secondary_button.dart';
+import '../../../components/default_button.dart';
 
 class Body extends StatelessWidget {
   @override
@@ -57,17 +56,18 @@ class Body extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                PrimaryButton(
+                DefaultButton(
                   text: 'Get Started',
                   onPressed: () {
                     Navigator.pushNamed(context, '/splash');
                   },
                 ),
-                SecondaryButton(
+                DefaultButton(
                   text: 'Log In',
                   onPressed: () {
                     Navigator.pushNamed(context, '/sign_in');
                   },
+                  secondary: true,
                 ),
               ],
             ),
