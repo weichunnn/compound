@@ -9,7 +9,7 @@ class Body extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      minimum: EdgeInsets.symmetric(horizontal: 20),
+      minimum: EdgeInsets.symmetric(horizontal: 35),
       child: Column(
         children: [
           Spacer(),
@@ -17,7 +17,6 @@ class Body extends StatelessWidget {
             alignment: Alignment.centerLeft,
             child: Container(
               width: getProportionateScreenWidth(310),
-              margin: EdgeInsets.only(left: 20),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -66,7 +65,9 @@ class Body extends StatelessWidget {
                 ),
                 SecondaryButton(
                   text: 'Log In',
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/sign_in');
+                  },
                 ),
               ],
             ),
