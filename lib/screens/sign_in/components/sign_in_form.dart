@@ -65,7 +65,9 @@ class _SignInFormState extends State<SignInForm> {
                 padding: const EdgeInsets.symmetric(vertical: 10),
                 child: LinkText(
                   text: 'Forgot Password?',
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.pushNamed(context, '/forgot_password');
+                  },
                   fontSize: getProportionateScreenHeight(14),
                 ),
               )
