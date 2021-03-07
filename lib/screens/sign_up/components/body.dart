@@ -65,22 +65,27 @@ class _BodyState extends State<Body> {
                 ],
               ),
               Spacer(),
-              EasyRichText(
-                'Already have an account? Log In',
-                defaultStyle: TextStyle(
-                  fontSize: getProportionateScreenHeight(14),
-                  color: kTextColor,
+              Padding(
+                padding: EdgeInsets.symmetric(
+                  vertical: getProportionateScreenHeight(15),
                 ),
-                patternList: [
-                  EasyRichTextPattern(
-                    targetString: 'Log In',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: kPrimaryColor,
-                    ),
-                    recognizer: TapGestureRecognizer()..onTap = () {},
+                child: EasyRichText(
+                  'Already have an account? Log In',
+                  defaultStyle: TextStyle(
+                    fontSize: getProportionateScreenHeight(14),
+                    color: kTextColor,
                   ),
-                ],
+                  patternList: [
+                    EasyRichTextPattern(
+                      targetString: 'Log In',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: kPrimaryColor,
+                      ),
+                      recognizer: TapGestureRecognizer()..onTap = () {},
+                    ),
+                  ],
+                ),
               ),
             ],
           ),

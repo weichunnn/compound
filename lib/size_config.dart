@@ -34,7 +34,7 @@ double getProportionateScreenWidth(double inputWidth) {
   return (inputWidth / 375.0) * screenWidth;
 }
 
-// Get Height of content avaialable without Notification Bar, App Bar and Bottom Safe Area Margin
+// Get Height of content available without Notification Bar, App Bar and Bottom Safe Area Margin
 double getAvailableHeight() {
   return SizeConfig.screenHeight -
       (SizeConfig.appBarSize +

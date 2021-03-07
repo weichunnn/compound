@@ -23,7 +23,7 @@ class _SignInFormState extends State<SignInForm> {
   final FormModel model = FormModel();
 
   bool _obscureText = true;
-  // Toggles the password show status
+
   void _togglePasswordStatus() {
     setState(
       () {
@@ -31,6 +31,21 @@ class _SignInFormState extends State<SignInForm> {
       },
     );
   }
+
+  final emailValidator = MultiValidator(
+    [
+      RequiredValidator(
+        errorText: 'Email is required',
+      ),
+      EmailValidator(
+        errorText: 'Email must be valid',
+      ),
+    ],
+  );
+
+  final passwordValidator = RequiredValidator(
+    errorText: 'Password is required',
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -83,22 +98,21 @@ class _SignInFormState extends State<SignInForm> {
       ),
       obscureText: _obscureText,
       onSaved: (value) => model.password = value,
-      validator: MultiValidator(
-        [
-          RequiredValidator(
-            errorText: 'Password is required',
-          ),
-        ],
-      ),
+      validator: passwordValidator,
       decoration: InputDecoration(
         labelText: 'Password',
         hintText: 'Enter your password',
-        suffixIcon: IconButton(
-          icon: Icon(
-            _obscureText ? Icons.visibility_off : Icons.visibility,
+        suffixIcon: Padding(
+          padding: EdgeInsets.only(
+            right: getProportionateScreenWidth(5),
           ),
-          onPressed: _togglePasswordStatus,
-          color: kGreyColor,
+          child: IconButton(
+            icon: Icon(
+              _obscureText ? Icons.visibility_off : Icons.visibility,
+            ),
+            onPressed: _togglePasswordStatus,
+            color: kGreyColor,
+          ),
         ),
       ),
     );
@@ -112,16 +126,7 @@ class _SignInFormState extends State<SignInForm> {
       ),
       keyboardType: TextInputType.emailAddress,
       onSaved: (value) => model.email = value,
-      validator: MultiValidator(
-        [
-          RequiredValidator(
-            errorText: 'Email is required',
-          ),
-          EmailValidator(
-            errorText: 'Email must be valid',
-          ),
-        ],
-      ),
+      validator: emailValidator,
       decoration: InputDecoration(
         labelText: 'Email Adresss',
         hintText: 'example@gmail.com',
