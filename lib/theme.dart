@@ -4,10 +4,12 @@ import 'constants.dart';
 
 ThemeData theme() {
   return ThemeData(
+    primaryColor: kPrimaryColor,
     scaffoldBackgroundColor: kBackgroundColor,
     fontFamily: 'Montserrat',
     appBarTheme: appBarTheme(),
     textTheme: textTheme(),
+    inputDecorationTheme: inputDecorationTheme(),
     visualDensity: VisualDensity.adaptivePlatformDensity,
   );
 }
@@ -32,5 +34,44 @@ AppBarTheme appBarTheme() {
         fontSize: 20,
       ),
     ),
+  );
+}
+
+InputDecorationTheme inputDecorationTheme() {
+  OutlineInputBorder defaultBorder = OutlineInputBorder(
+    borderRadius: BorderRadius.circular(10.0),
+    borderSide: BorderSide(
+      color: kGreyColor,
+      width: 2.0,
+    ),
+    gapPadding: 10,
+  );
+
+  OutlineInputBorder defaultErrorBorder = OutlineInputBorder(
+    borderRadius: BorderRadius.circular(10.0),
+    borderSide: BorderSide(
+      color: kErrorColor,
+      width: 2.0,
+    ),
+    gapPadding: 10,
+  );
+
+  return InputDecorationTheme(
+    contentPadding: EdgeInsets.symmetric(
+      horizontal: 25,
+      vertical: 20,
+    ),
+    border: defaultBorder,
+    enabledBorder: defaultBorder,
+    focusedBorder: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(10.0),
+      borderSide: BorderSide(
+        color: kPrimaryColor,
+        width: 2.0,
+      ),
+      gapPadding: 10,
+    ),
+    errorBorder: defaultErrorBorder,
+    focusedErrorBorder: defaultErrorBorder,
   );
 }
