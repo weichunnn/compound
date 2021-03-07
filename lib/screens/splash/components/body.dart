@@ -89,7 +89,9 @@ class _BodyState extends State<Body> {
                   Spacer(flex: 3),
                   DefaultButton(
                     text: 'Sign Up',
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.pushNamed(context, '/sign_up');
+                    },
                   ),
                   Spacer(flex: 1)
                 ],
