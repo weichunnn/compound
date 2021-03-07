@@ -82,7 +82,10 @@ class _BodyState extends State<Body> {
                         fontWeight: FontWeight.bold,
                         color: kPrimaryColor,
                       ),
-                      recognizer: TapGestureRecognizer()..onTap = () {},
+                      recognizer: TapGestureRecognizer()
+                        ..onTap = () {
+                          Navigator.pushNamed(context, '/sign_in');
+                        },
                     ),
                   ],
                 ),
