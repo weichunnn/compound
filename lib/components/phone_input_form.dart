@@ -1,18 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 
-import '../../../constants.dart';
-import '../../../size_config.dart';
-import '../../../components/default_button.dart';
+import '../constants.dart';
+import '../size_config.dart';
+import 'default_button.dart';
 
-class ForgotPasswordForm extends StatefulWidget {
+class PhoneInputForm extends StatefulWidget {
+  const PhoneInputForm({
+    Key key,
+    this.forVerification = false,
+  }) : super(key: key);
+
+  final bool forVerification;
+
   @override
-  _ForgotPasswordFormState createState() => _ForgotPasswordFormState();
+  _PhoneInputFormState createState() => _PhoneInputFormState();
 }
 
-class _ForgotPasswordFormState extends State<ForgotPasswordForm> {
+class _PhoneInputFormState extends State<PhoneInputForm> {
   final _formKey = GlobalKey<FormState>();
-  final initial = PhoneNumber(isoCode: 'MY');
+  // final initial = PhoneNumber(isoCode: 'MY');
 
   String phoneNumber;
   String userInput;
@@ -20,6 +27,10 @@ class _ForgotPasswordFormState extends State<ForgotPasswordForm> {
 
   String phoneValidator(value) {
     if (value.isEmpty) {
+      // To cater for submitting form prior to any Input
+      setState(() {
+        borderColor = kErrorColor;
+      });
       return '';
     }
 
@@ -37,16 +48,25 @@ class _ForgotPasswordFormState extends State<ForgotPasswordForm> {
             height: getProportionateScreenHeight(25),
           ),
           DefaultButton(
-            text: 'Recover Code',
+            text: widget.forVerification ? 'Send Code' : 'Recover Code',
             onPressed: () {
               if (_formKey.currentState.validate()) {
                 _formKey.currentState.save();
-                // Insert API call to backend for validation
-                ScaffoldMessenger.of(_formKey.currentContext).showSnackBar(
-                  SnackBar(
-                    content: Text('Processing'),
-                  ),
-                );
+                widget.forVerification
+                    ?
+                    // Insert API call to backend for validation
+                    ScaffoldMessenger.of(_formKey.currentContext).showSnackBar(
+                        SnackBar(
+                          content: Text('For Verification'),
+                        ),
+                      )
+                    :
+                    // Insert API call to backend for validation
+                    ScaffoldMessenger.of(_formKey.currentContext).showSnackBar(
+                        SnackBar(
+                          content: Text('For Recovering Code'),
+                        ),
+                      );
               }
             },
           ),
@@ -66,7 +86,6 @@ class _ForgotPasswordFormState extends State<ForgotPasswordForm> {
         ),
       ),
       child: InternationalPhoneNumberInput(
-        autoValidateMode: AutovalidateMode.onUserInteraction,
         spaceBetweenSelectorAndTextField: 0,
         onInputChanged: (value) => {
           phoneNumber = value.phoneNumber,
@@ -80,17 +99,23 @@ class _ForgotPasswordFormState extends State<ForgotPasswordForm> {
         // Internal call for saving the phone number is using a future, so saving will yield null, reported as an Issue
         // onChanged is used to save the latest
         onSaved: (value) => phoneNumber = value.phoneNumber,
-        initialValue: initial,
+        // initialValue: initial,
         selectorTextStyle: TextStyle(
           fontSize: getProportionateScreenHeight(16),
+          color: Colors.black,
         ),
         textStyle: TextStyle(
-          fontSize: getProportionateScreenHeight(16),
+          fontSize: getProportionateScreenHeight(18),
         ),
         inputDecoration: InputDecoration(
           // Prevent error text from pushing input box upwards
           errorStyle: TextStyle(
             height: 0,
+          ),
+          // Make Input closer to Selector
+          contentPadding: EdgeInsets.symmetric(
+            horizontal: getProportionateScreenHeight(5),
+            vertical: getProportionateScreenHeight(15),
           ),
           hintText: 'Phone Number',
           focusedBorder: InputBorder.none,
@@ -99,12 +124,11 @@ class _ForgotPasswordFormState extends State<ForgotPasswordForm> {
           focusedErrorBorder: InputBorder.none,
         ),
         validator: phoneValidator,
-        searchBoxDecoration: InputDecoration(
-          labelText: 'Country Name or Dial Code',
-        ),
-        selectorConfig: SelectorConfig(
-          selectorType: PhoneInputSelectorType.DIALOG,
-        ),
+        // searchBoxDecoration: InputDecoration(
+        //   labelText: 'Country Name or Dial Code',
+        // ),
+        // Disable Selector and force Malaysia as only Country Code
+        countries: ['MY'],
       ),
     );
   }

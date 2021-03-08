@@ -1,8 +1,8 @@
-import 'package:compound/components/phone_input_form.dart';
 import 'package:flutter/material.dart';
 
 import '../../../size_config.dart';
 import '../../../components/normal_template.dart';
+import '../../../components/phone_input_form.dart';
 
 class Body extends StatelessWidget {
   @override
@@ -13,15 +13,17 @@ class Body extends StatelessWidget {
         child: Column(
           children: [
             NormalTemplate(
-              image: 'assets/images/forgot_password.svg',
-              title: 'Forgot your password?',
+              image: 'assets/images/phone_verification.svg',
+              title: 'Verify your number',
               caption:
-                  'Don’t worry! Enter your phone number below to receive your password reset instructions',
+                  'Please enter your country code and your \ncurrent mobile phone number',
             ),
             SizedBox(
               height: getProportionateScreenHeight(25),
             ),
-            PhoneInputForm(),
+            PhoneInputForm(
+              forVerification: true,
+            ),
           ],
         ),
       ),
