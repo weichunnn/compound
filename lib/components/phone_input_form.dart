@@ -105,7 +105,7 @@ class _PhoneInputFormState extends State<PhoneInputForm> {
           color: Colors.black,
         ),
         textStyle: TextStyle(
-          fontSize: getProportionateScreenHeight(16),
+          fontSize: getProportionateScreenHeight(18),
         ),
         inputDecoration: InputDecoration(
           // Prevent error text from pushing input box upwards
@@ -114,7 +114,7 @@ class _PhoneInputFormState extends State<PhoneInputForm> {
           ),
           // Make Input closer to Selector
           contentPadding: EdgeInsets.symmetric(
-            horizontal: 0,
+            horizontal: getProportionateScreenHeight(5),
             vertical: getProportionateScreenHeight(15),
           ),
           hintText: 'Phone Number',

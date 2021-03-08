@@ -1,8 +1,8 @@
+import 'package:compound/components/phone_input_form.dart';
 import 'package:flutter/material.dart';
 
 import '../../../size_config.dart';
 import '../../../components/normal_template.dart';
-import 'forgot_password_form.dart';
 
 class Body extends StatelessWidget {
   @override
@@ -21,7 +21,7 @@ class Body extends StatelessWidget {
             SizedBox(
               height: getProportionateScreenHeight(25),
             ),
-            ForgotPasswordForm(),
+            PhoneInputForm(),
           ],
         ),
       ),
