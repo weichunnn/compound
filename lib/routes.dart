@@ -5,6 +5,7 @@ import 'package:compound/screens/splash/splash_screen.dart';
 import 'package:compound/screens/sign_in/sign_in_screen.dart';
 import 'package:compound/screens/sign_up/sign_up_screen.dart';
 import 'package:compound/screens/forgot_password/forgot_password_screen.dart';
+import 'package:compound/screens/phone_verification/phone_verification_screen.dart';
 
 final Map<String, WidgetBuilder> routes = {
   '/': (context) => WelcomeScreen(),
@@ -12,4 +13,5 @@ final Map<String, WidgetBuilder> routes = {
   '/sign_in': (context) => SignInScreen(),
   '/sign_up': (context) => SignUpScreen(),
   '/forgot_password': (context) => ForgotPasswordScreen(),
+  '/phone_verification': (context) => PhoneVerificationScreen(),
 };
