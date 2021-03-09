@@ -105,7 +105,7 @@ class _PhoneInputFormState extends State<PhoneInputForm> {
         },
         // Internal call for saving the phone number is using a future, so saving will yield null, reported as an Issue
         // onChanged is used to save the latest
-        onSaved: (value) => phoneNumber = value.phoneNumber,
+        // onSaved: (value) => phoneNumber = value.phoneNumber,
         // initialValue: initial,
         selectorTextStyle: TextStyle(
           fontSize: getProportionateScreenHeight(16),
