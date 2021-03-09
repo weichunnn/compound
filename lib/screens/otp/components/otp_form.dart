@@ -26,6 +26,12 @@ class _OtpFormState extends State<OtpForm> {
   }
 
   @override
+  void dispose() {
+    _timer.cancel();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Column(
       children: [

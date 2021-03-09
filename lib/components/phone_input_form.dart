@@ -52,21 +52,28 @@ class _PhoneInputFormState extends State<PhoneInputForm> {
             onPressed: () {
               if (_formKey.currentState.validate()) {
                 _formKey.currentState.save();
-                widget.forVerification
-                    ?
-                    // Insert API call to backend for validation
-                    ScaffoldMessenger.of(_formKey.currentContext).showSnackBar(
-                        SnackBar(
-                          content: Text('For Verification'),
-                        ),
-                      )
-                    :
-                    // Insert API call to backend for validation
-                    ScaffoldMessenger.of(_formKey.currentContext).showSnackBar(
-                        SnackBar(
-                          content: Text('For Recovering Code'),
-                        ),
-                      );
+                if (widget.forVerification) {
+                  // Insert API call to backend for validation
+                  ScaffoldMessenger.of(_formKey.currentContext).showSnackBar(
+                    SnackBar(
+                      content: Text(phoneNumber),
+                    ),
+                  );
+                  Navigator.pushNamed(
+                    context,
+                    '/otp',
+                    arguments: {
+                      'phoneNumber': phoneNumber,
+                    },
+                  );
+                } else {
+                  // Insert API call to backend for validation
+                  ScaffoldMessenger.of(_formKey.currentContext).showSnackBar(
+                    SnackBar(
+                      content: Text('For Recovering Code'),
+                    ),
+                  );
+                }
               }
             },
           ),

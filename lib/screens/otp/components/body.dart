@@ -12,6 +12,9 @@ class Body extends StatefulWidget {
 class _BodyState extends State<Body> {
   @override
   Widget build(BuildContext context) {
+    final Map arguments = ModalRoute.of(context).settings.arguments as Map;
+    String _phoneNumber = arguments['phoneNumber'];
+
     return SafeArea(
       minimum: EdgeInsets.symmetric(horizontal: 35),
       child: SingleChildScrollView(
@@ -20,7 +23,7 @@ class _BodyState extends State<Body> {
             NormalTemplate(
               image: 'assets/images/forgot_password.svg',
               title: 'Verification Code',
-              caption: 'Please enter the code sent to (+60) 123456789',
+              caption: 'Please enter the code sent to $_phoneNumber',
             ),
             SizedBox(
               height: getProportionateScreenHeight(25),
