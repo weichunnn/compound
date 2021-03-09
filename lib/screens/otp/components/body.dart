@@ -24,6 +24,7 @@ class _BodyState extends State<Body> {
               image: 'assets/images/forgot_password.svg',
               title: 'Verification Code',
               caption: 'Please enter the code sent to $_phoneNumber',
+              bolded: _phoneNumber,
             ),
             SizedBox(
               height: getProportionateScreenHeight(25),
