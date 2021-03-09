@@ -1,3 +1,4 @@
+import 'package:compound/screens/2fa/settings/fa_settings_screen.dart';
 import 'package:flutter/material.dart';
 
 import 'package:compound/screens/welcome/welcome_screen.dart';
@@ -7,7 +8,6 @@ import 'package:compound/screens/sign_up/sign_up_screen.dart';
 import 'package:compound/screens/forgot_password/forgot_password_screen.dart';
 import 'package:compound/screens/phone_verification/phone_verification_screen.dart';
 import 'package:compound/screens/otp/otp_screen.dart';
-import 'package:compound/screens/2fa/fa_screen.dart';
 
 final Map<String, WidgetBuilder> routes = {
   '/': (context) => WelcomeScreen(),
@@ -17,5 +17,5 @@ final Map<String, WidgetBuilder> routes = {
   '/forgot_password': (context) => ForgotPasswordScreen(),
   '/phone_verification': (context) => PhoneVerificationScreen(),
   '/otp': (context) => OtpScreen(),
-  '/2fa': (context) => FaScreen(),
+  '/2fa': (context) => FaSettingsScreen(),
 };

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../../../size_config.dart';
-import '../../../components/normal_template.dart';
-import '../../../components/default_button.dart';
+import '../../../../size_config.dart';
+import '../../../../components/normal_template.dart';
+import '../../../../components/default_button.dart';
 import 'authentication_factor.dart';
 
 class Body extends StatelessWidget {
