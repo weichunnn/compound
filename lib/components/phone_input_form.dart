@@ -52,21 +52,28 @@ class _PhoneInputFormState extends State<PhoneInputForm> {
             onPressed: () {
               if (_formKey.currentState.validate()) {
                 _formKey.currentState.save();
-                widget.forVerification
-                    ?
-                    // Insert API call to backend for validation
-                    ScaffoldMessenger.of(_formKey.currentContext).showSnackBar(
-                        SnackBar(
-                          content: Text('For Verification'),
-                        ),
-                      )
-                    :
-                    // Insert API call to backend for validation
-                    ScaffoldMessenger.of(_formKey.currentContext).showSnackBar(
-                        SnackBar(
-                          content: Text('For Recovering Code'),
-                        ),
-                      );
+                if (widget.forVerification) {
+                  // Insert API call to backend for validation
+                  ScaffoldMessenger.of(_formKey.currentContext).showSnackBar(
+                    SnackBar(
+                      content: Text(phoneNumber),
+                    ),
+                  );
+                  Navigator.pushNamed(
+                    context,
+                    '/otp',
+                    arguments: {
+                      'phoneNumber': phoneNumber,
+                    },
+                  );
+                } else {
+                  // Insert API call to backend for validation
+                  ScaffoldMessenger.of(_formKey.currentContext).showSnackBar(
+                    SnackBar(
+                      content: Text('For Recovering Code'),
+                    ),
+                  );
+                }
               }
             },
           ),
@@ -98,7 +105,7 @@ class _PhoneInputFormState extends State<PhoneInputForm> {
         },
         // Internal call for saving the phone number is using a future, so saving will yield null, reported as an Issue
         // onChanged is used to save the latest
-        onSaved: (value) => phoneNumber = value.phoneNumber,
+        // onSaved: (value) => phoneNumber = value.phoneNumber,
         // initialValue: initial,
         selectorTextStyle: TextStyle(
           fontSize: getProportionateScreenHeight(16),
