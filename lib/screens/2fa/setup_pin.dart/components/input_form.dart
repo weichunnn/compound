@@ -15,27 +15,46 @@ class InputForm extends StatefulWidget {
 
 class _InputFormState extends State<InputForm> {
   final int fieldsCount = 4;
-  String text = '';
+  // State of Form [1 = Setup, 2 = Confirmation]
+  int state = 1;
+  Map<int, String> pinCodes = {
+    1: '',
+    2: '',
+  };
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        SizedBox(
-          width: getProportionateScreenWidth(215),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: List.generate(
-              fieldsCount,
-              (index) => buildCircle(index: index + 1),
+    return SizedBox(
+      height: getAvailableHeight(),
+      child: Column(
+        children: [
+          Spacer(),
+          Text(
+            state == 1 ? 'Enter your Pin Code' : 'Re-Enter your Pin Code',
+            style: TextStyle(
+              fontSize: getProportionateScreenHeight(20),
+              fontWeight: FontWeight.bold,
             ),
           ),
-        ),
-        SizedBox(
-          height: getProportionateScreenHeight(100),
-        ),
-        buildKeyboard(),
-      ],
+          Spacer(),
+          SizedBox(
+            width: getProportionateScreenWidth(215),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: List.generate(
+                fieldsCount,
+                (index) => buildCircle(index: index + 1),
+              ),
+            ),
+          ),
+          SizedBox(
+            height: getProportionateScreenHeight(50),
+          ),
+          Spacer(),
+          buildKeyboard(),
+          Spacer(),
+        ],
+      ),
     );
   }
 
@@ -48,7 +67,7 @@ class _InputFormState extends State<InputForm> {
         horizontal: getProportionateScreenWidth(10),
       ),
       decoration: BoxDecoration(
-        color: text.length >= index ? kPrimaryColor : kGreyColor,
+        color: pinCodes[state].length >= index ? kPrimaryColor : kGreyColor,
         shape: BoxShape.circle,
       ),
     );
@@ -56,17 +75,25 @@ class _InputFormState extends State<InputForm> {
 
   NumericKeyboard buildKeyboard() {
     void _onKeyboardTap(value) {
-      // Allow text to be updated up till the number of fieldsCount
-      if (text.length < fieldsCount) {
+      // Allow pin to be updated up till the number of fieldsCount
+      if (pinCodes[state].length < fieldsCount) {
         setState(
           () {
-            text += value;
+            pinCodes[state] += value;
           },
         );
       }
       // Run when fieldsCount is reached
-      if (text.length == fieldsCount) {
-        print(text);
+      if (pinCodes[state].length == fieldsCount) {
+        print(pinCodes[state]);
+        if (state == 1) {
+          setState(() {
+            state = 2;
+          });
+        } else {
+          // Check if Pin are Equivalent
+          pinCodes[1] == pinCodes[2] ? print('True') : print('Restart');
+        }
       }
     }
 
@@ -79,9 +106,10 @@ class _InputFormState extends State<InputForm> {
       ),
       rightButtonFn: () {
         // If statement to remove gesture errors
-        if (text.length > 0) {
+        if (pinCodes[state].length > 0) {
           setState(() {
-            text = text.substring(0, text.length - 1);
+            pinCodes[state] =
+                pinCodes[state].substring(0, pinCodes[state].length - 1);
           });
         }
       },
