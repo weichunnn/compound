@@ -5,28 +5,52 @@ import '../../../../size_config.dart';
 import '../../../../components/numeric_keyboard.dart';
 
 class InputForm extends StatefulWidget {
+  const InputForm({
+    Key key,
+  }) : super(key: key);
+
   @override
   _InputFormState createState() => _InputFormState();
 }
 
 class _InputFormState extends State<InputForm> {
-  String text = '';
   final int fieldsCount = 4;
+  String text = '';
 
   @override
   Widget build(BuildContext context) {
     return Column(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        PinInput(
-          text: text,
-          fieldsCount: fieldsCount,
+        SizedBox(
+          width: getProportionateScreenWidth(215),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: List.generate(
+              fieldsCount,
+              (index) => buildCircle(index: index + 1),
+            ),
+          ),
         ),
         SizedBox(
           height: getProportionateScreenHeight(100),
         ),
         buildKeyboard(),
       ],
+    );
+  }
+
+  AnimatedContainer buildCircle({int index}) {
+    return AnimatedContainer(
+      height: getProportionateScreenWidth(25),
+      width: getProportionateScreenWidth(25),
+      duration: kAnimationDuration,
+      margin: EdgeInsets.symmetric(
+        horizontal: getProportionateScreenWidth(10),
+      ),
+      decoration: BoxDecoration(
+        color: text.length >= index ? kPrimaryColor : kGreyColor,
+        shape: BoxShape.circle,
+      ),
     );
   }
 
@@ -43,7 +67,6 @@ class _InputFormState extends State<InputForm> {
       // Run when fieldsCount is reached
       if (text.length == fieldsCount) {
         print(text);
-        // Call to NextPage
       }
     }
 
@@ -62,46 +85,6 @@ class _InputFormState extends State<InputForm> {
           });
         }
       },
-    );
-  }
-}
-
-class PinInput extends StatelessWidget {
-  const PinInput({
-    Key key,
-    this.text,
-    this.fieldsCount,
-  }) : super(key: key);
-
-  final String text;
-  final int fieldsCount;
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      width: getProportionateScreenWidth(215),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: List.generate(
-          fieldsCount,
-          (index) => buildCircle(index: index + 1),
-        ),
-      ),
-    );
-  }
-
-  AnimatedContainer buildCircle({int index}) {
-    return AnimatedContainer(
-      height: getProportionateScreenWidth(25),
-      width: getProportionateScreenWidth(25),
-      duration: kAnimationDuration,
-      margin: EdgeInsets.symmetric(
-        horizontal: getProportionateScreenWidth(10),
-      ),
-      decoration: BoxDecoration(
-        color: text.length >= index ? kPrimaryColor : kGreyColor,
-        shape: BoxShape.circle,
-      ),
     );
   }
 }
