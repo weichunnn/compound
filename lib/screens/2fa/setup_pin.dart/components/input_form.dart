@@ -1,3 +1,4 @@
+import 'package:flash/flash.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../constants.dart';
@@ -21,6 +22,7 @@ class _InputFormState extends State<InputForm> {
     1: '',
     2: '',
   };
+  bool _isToastShown = false;
 
   @override
   Widget build(BuildContext context) {
@@ -74,7 +76,8 @@ class _InputFormState extends State<InputForm> {
   }
 
   NumericKeyboard buildKeyboard() {
-    void _onKeyboardTap(value) {
+    // Async Await used to prevent toast message showing up duplicates
+    void _onKeyboardTap(value) async {
       // Allow pin to be updated up till the number of fieldsCount
       if (pinCodes[state].length < fieldsCount) {
         setState(
@@ -87,12 +90,19 @@ class _InputFormState extends State<InputForm> {
       if (pinCodes[state].length == fieldsCount) {
         print(pinCodes[state]);
         if (state == 1) {
-          setState(() {
-            state = 2;
-          });
+          state = 2;
         } else {
           // Check if Pin are Equivalent
-          pinCodes[1] == pinCodes[2] ? print('True') : print('Restart');
+          if (pinCodes[1] == pinCodes[2]) {
+            Navigator.pushNamed(context, '/2fa');
+          } else {
+            if (_isToastShown) {
+              return;
+            }
+            _isToastShown = true;
+            await buildShowFlash(context);
+            _isToastShown = false;
+          }
         }
       }
     }
@@ -112,6 +122,49 @@ class _InputFormState extends State<InputForm> {
                 pinCodes[state].substring(0, pinCodes[state].length - 1);
           });
         }
+      },
+    );
+  }
+
+  Future buildShowFlash(context) {
+    return showFlash(
+      context: context,
+      duration: Duration(seconds: 3),
+      builder: (context, controller) {
+        return Flash.dialog(
+          controller: controller,
+          margin: EdgeInsets.symmetric(horizontal: 25),
+          borderRadius: BorderRadius.all(Radius.circular(10)),
+          backgroundColor: kErrorColor,
+          boxShadows: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.5),
+              spreadRadius: 2.5,
+              blurRadius: 7.5,
+              offset: Offset(0, 5),
+            ),
+          ],
+          enableDrag: true,
+          horizontalDismissDirection: HorizontalDismissDirection.horizontal,
+          alignment: Alignment.topCenter,
+          child: FlashBar(
+            message: Text(
+              'Pin Code is not identical. Please try again.',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: getProportionateScreenHeight(16),
+              ),
+            ),
+            icon: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20.0),
+              child: Icon(
+                Icons.info,
+                color: Colors.white,
+                size: 30.0,
+              ),
+            ),
+          ),
+        );
       },
     );
   }

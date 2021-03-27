@@ -72,7 +72,10 @@ class _AuthenticationFactorState extends State<AuthenticationFactor> {
               if (value) {
                 switch (widget.title) {
                   case 'Pin Code':
-                    print('Pin Enable');
+                    // Enable users to view State Changes before being directed to page
+                    Future.delayed(Duration(milliseconds: 300), () {
+                      Navigator.pushNamed(context, '/pin');
+                    });
                     break;
                   case 'Biometrics':
                     print('Bio Enable');
