@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:local_auth/local_auth.dart';
 
 import '../../../../constants.dart';
 import '../../../../size_config.dart';
@@ -21,8 +23,36 @@ class AuthenticationFactor extends StatefulWidget {
 }
 
 class _AuthenticationFactorState extends State<AuthenticationFactor> {
-  //default case
+  //default case, to implement fetching of value from database
   bool isSwitched = false;
+
+  // Explore reducing the duplicate calling of this block
+  final LocalAuthentication _localAuthentication = LocalAuthentication();
+  Future<void> _authenticateUser() async {
+    bool isAuthenticated = false;
+
+    try {
+      isAuthenticated = await _localAuthentication.authenticate(
+        biometricOnly: true,
+        localizedReason: 'Scan your fingerprint to authenticate',
+        useErrorDialogs: true,
+        stickyAuth: true,
+      );
+    } on PlatformException catch (e) {
+      print(e);
+    }
+    if (!mounted) return isAuthenticated;
+
+    if (isAuthenticated) {
+      print('User is authenticated!');
+      // Notify backend
+      setState(() {
+        isSwitched = true;
+      });
+    } else {
+      print('User is not authenticated.');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -65,10 +95,7 @@ class _AuthenticationFactorState extends State<AuthenticationFactor> {
           ),
           Switch(
             value: isSwitched,
-            onChanged: (value) {
-              setState(() {
-                isSwitched = value;
-              });
+            onChanged: (value) async {
               if (value) {
                 switch (widget.title) {
                   case 'Pin Code':
@@ -78,7 +105,7 @@ class _AuthenticationFactorState extends State<AuthenticationFactor> {
                     });
                     break;
                   case 'Biometrics':
-                    print('Bio Enable');
+                    await _authenticateUser();
                     break;
                 }
               }
