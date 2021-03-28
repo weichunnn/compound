@@ -1,5 +1,6 @@
 import 'package:flash/flash.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../../constants.dart';
 import '../../../../size_config.dart';
@@ -22,7 +23,13 @@ class _InputFormState extends State<InputForm> {
     1: '',
     2: '',
   };
+
   bool _isToastShown = false;
+
+  void putShared(String key, bool val) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setBool(key, val);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -76,7 +83,6 @@ class _InputFormState extends State<InputForm> {
   }
 
   NumericKeyboard buildKeyboard() {
-    // Async Await used to prevent toast message showing up duplicates
     void _onKeyboardTap(value) async {
       // Allow pin to be updated up till the number of fieldsCount
       if (pinCodes[state].length < fieldsCount) {
@@ -94,8 +100,10 @@ class _InputFormState extends State<InputForm> {
         } else {
           // Check if Pin are Equivalent
           if (pinCodes[1] == pinCodes[2]) {
+            putShared('Pin Code', true);
             Navigator.pushNamed(context, '/2fa');
           } else {
+            // To prevent toast message from showing up duplicates
             if (_isToastShown) {
               return;
             }

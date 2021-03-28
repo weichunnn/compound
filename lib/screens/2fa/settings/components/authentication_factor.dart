@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:local_auth/local_auth.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../../constants.dart';
 import '../../../../size_config.dart';
@@ -23,9 +24,6 @@ class AuthenticationFactor extends StatefulWidget {
 }
 
 class _AuthenticationFactorState extends State<AuthenticationFactor> {
-  //default case, to implement fetching of value from database
-  bool isSwitched = false;
-
   // Explore reducing the duplicate calling of this block
   final LocalAuthentication _localAuthentication = LocalAuthentication();
   Future<void> _authenticateUser() async {
@@ -44,14 +42,21 @@ class _AuthenticationFactorState extends State<AuthenticationFactor> {
     if (!mounted) return isAuthenticated;
 
     if (isAuthenticated) {
-      print('User is authenticated!');
-      // Notify backend
       setState(() {
-        isSwitched = true;
+        putShared(widget.title, true);
       });
-    } else {
-      print('User is not authenticated.');
     }
+  }
+
+  void putShared(String key, bool val) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setBool(key, val);
+  }
+
+  Future getShared(String key) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    bool val = prefs.getBool(key) == null ? false : prefs.getBool(key);
+    return val;
   }
 
   @override
@@ -93,27 +98,34 @@ class _AuthenticationFactorState extends State<AuthenticationFactor> {
               ),
             ],
           ),
-          Switch(
-            value: isSwitched,
-            onChanged: (value) async {
-              if (value) {
-                switch (widget.title) {
-                  case 'Pin Code':
-                    // Enable users to view State Changes before being directed to page
-                    Future.delayed(Duration(milliseconds: 300), () {
-                      Navigator.pushNamed(context, '/pin');
+          FutureBuilder(
+            future: getShared(widget.title),
+            initialData: false,
+            builder: (context, snapshot) {
+              return Switch(
+                value: snapshot.data,
+                onChanged: (value) async {
+                  if (value) {
+                    switch (widget.title) {
+                      case 'Pin Code':
+                        Navigator.pushNamed(context, '/pin');
+                        break;
+                      case 'Biometrics':
+                        await _authenticateUser();
+                        break;
+                    }
+                  } else {
+                    setState(() {
+                      putShared(widget.title, false);
                     });
-                    break;
-                  case 'Biometrics':
-                    await _authenticateUser();
-                    break;
-                }
-              }
+                  }
+                },
+                activeTrackColor: Colors.lightGreenAccent,
+                activeColor: kSuccessColor,
+                inactiveTrackColor: Colors.redAccent.shade100,
+                inactiveThumbColor: kErrorColor,
+              );
             },
-            activeTrackColor: Colors.lightGreenAccent,
-            activeColor: kSuccessColor,
-            inactiveTrackColor: Colors.redAccent.shade100,
-            inactiveThumbColor: kErrorColor,
           ),
         ],
       ),
