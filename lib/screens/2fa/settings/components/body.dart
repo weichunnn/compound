@@ -14,26 +14,18 @@ class Body extends StatefulWidget {
 
 class _BodyState extends State<Body> {
   final LocalAuthentication _localAuthentication = LocalAuthentication();
-  List<BiometricType> biometricsAvailable = [];
 
-  Future<void> _isBiometricsAvailable() async {
+  Future<List> _isBiometricsAvailable() async {
+    List<BiometricType> listOfBiometrics = [];
     try {
-      biometricsAvailable = await _localAuthentication.getAvailableBiometrics();
+      listOfBiometrics = await _localAuthentication.getAvailableBiometrics();
     } on PlatformException catch (e) {
       print(e);
     }
 
-    if (!mounted) return;
+    if (!mounted) return listOfBiometrics;
 
-    setState(() {
-      biometricsAvailable = biometricsAvailable;
-    });
-  }
-
-  @override
-  void initState() {
-    _isBiometricsAvailable();
-    super.initState();
+    return listOfBiometrics;
   }
 
   @override
@@ -59,12 +51,21 @@ class _BodyState extends State<Body> {
           SizedBox(
             height: getProportionateScreenHeight(30),
           ),
-          if (biometricsAvailable.contains(BiometricType.fingerprint))
-            AuthenticationFactor(
-              image: 'assets/icons/fingerprint.svg',
-              title: 'Biometrics',
-              caption: 'High Security',
-            ),
+          FutureBuilder(
+            future: _isBiometricsAvailable(),
+            initialData: [],
+            builder: (context, snapshot) {
+              if (snapshot.data.contains(BiometricType.fingerprint)) {
+                return AuthenticationFactor(
+                  image: 'assets/icons/fingerprint.svg',
+                  title: 'Biometrics',
+                  caption: 'High Security',
+                );
+              } else {
+                return SizedBox();
+              }
+            },
+          ),
           Spacer(),
           DefaultButton(
             text: 'Continue',
