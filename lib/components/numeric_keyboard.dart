@@ -1,3 +1,4 @@
+import 'package:compound/size_config.dart';
 import 'package:flutter/material.dart';
 
 import '../constants.dart';
@@ -46,7 +47,7 @@ class NumericKeyboard extends StatefulWidget {
     this.mainAxisAlignment = MainAxisAlignment.spaceBetween,
     this.padding,
     this.buttonHeight = 75,
-    this.buttonWidth = 95,
+    this.buttonWidth = 55,
   }) : super(key: key);
 
   @override
@@ -98,8 +99,8 @@ class _NumericKeyboardState extends State<NumericKeyboard> {
                 onTap: widget.leftButtonFn,
                 child: Container(
                   alignment: Alignment.center,
-                  width: widget.buttonWidth,
-                  height: widget.buttonHeight,
+                  width: getProportionateScreenWidth(widget.buttonWidth),
+                  height: getProportionateScreenHeight(widget.buttonHeight),
                   child: widget.leftIcon,
                 ),
               ),
@@ -112,8 +113,8 @@ class _NumericKeyboardState extends State<NumericKeyboard> {
                 onTap: widget.rightButtonFn,
                 child: Container(
                   alignment: Alignment.center,
-                  width: widget.buttonWidth,
-                  height: widget.buttonHeight,
+                  width: getProportionateScreenWidth(widget.buttonWidth),
+                  height: getProportionateScreenHeight(widget.buttonHeight),
                   child: widget.rightIcon,
                 ),
               )
@@ -135,12 +136,12 @@ class _NumericKeyboardState extends State<NumericKeyboard> {
       },
       child: Container(
         alignment: Alignment.center,
-        width: widget.buttonWidth,
-        height: widget.buttonHeight,
+        width: getProportionateScreenWidth(widget.buttonWidth),
+        height: getProportionateScreenHeight(widget.buttonHeight),
         child: Text(
           value,
           style: TextStyle(
-            fontSize: 45,
+            fontSize: getProportionateScreenHeight(45),
             color: widget.textColor,
           ),
         ),
