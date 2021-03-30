@@ -41,7 +41,7 @@ class _BodyState extends State<Body> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      minimum: EdgeInsets.symmetric(horizontal: 20),
+      minimum: EdgeInsets.only(left: 35, right: 35, bottom: 20),
       child: SizedBox(
         width: double.infinity,
         child: Column(

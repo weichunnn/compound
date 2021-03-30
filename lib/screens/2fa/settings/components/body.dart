@@ -31,14 +31,14 @@ class _BodyState extends State<Body> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      minimum: EdgeInsets.symmetric(horizontal: 35),
+      minimum: EdgeInsets.only(left: 35, right: 35, bottom: 20),
       child: Column(
         children: [
           NormalTemplate(
             image: 'assets/images/2fa.svg',
             title: 'Secure Account',
             caption:
-                'Enable either 2-factor-authentication to secure your account from unwanted eyes',
+                'Enable 2-factor-authentication to secure your account from unwanted eyes',
           ),
           SizedBox(
             height: getProportionateScreenHeight(45),

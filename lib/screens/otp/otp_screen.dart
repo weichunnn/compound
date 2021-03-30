@@ -5,11 +5,14 @@ import 'components/body.dart';
 class OtpScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        leadingWidth: 100,
+    return GestureDetector(
+      onTap: () => FocusScope.of(context).unfocus(),
+      child: Scaffold(
+        appBar: AppBar(
+          leadingWidth: 75,
+        ),
+        body: Body(),
       ),
-      body: Body(),
     );
   }
 }

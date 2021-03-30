@@ -1,11 +1,10 @@
-import 'package:easy_rich_text/easy_rich_text.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 
 import '../../../constants.dart';
 import '../../../size_config.dart';
 import '../../../components/default_button.dart';
+import '../../../components/tnc_text.dart';
 
 class FormModel {
   FormModel({
@@ -57,15 +56,15 @@ class _SignUpFormState extends State<SignUpForm> {
       ),
       MinLengthValidator(
         8,
-        errorText: 'Password must be at least 8 digits long',
+        errorText: 'At least 8 digits long',
       ),
       PatternValidator(
         r'([A-Z]+)',
-        errorText: 'Password must have at least one uppercase letter',
+        errorText: 'At least one uppercase letter',
       ),
       PatternValidator(
         r'(?=.*?[#?!@$%^&*-])',
-        errorText: 'Password must have at least one special character',
+        errorText: 'At least one special character',
       ),
     ],
   );
@@ -91,11 +90,11 @@ class _SignUpFormState extends State<SignUpForm> {
         children: [
           emailField(),
           SizedBox(
-            height: getProportionateScreenHeight(25),
+            height: getProportionateScreenHeight(15),
           ),
           passwordField(),
           SizedBox(
-            height: getProportionateScreenHeight(25),
+            height: getProportionateScreenHeight(15),
           ),
           confirmPasswordField(),
           SizedBox(
@@ -118,31 +117,7 @@ class _SignUpFormState extends State<SignUpForm> {
           SizedBox(
             height: getProportionateScreenHeight(5),
           ),
-          EasyRichText(
-            'By signing up, you confirm that you agree to out TnC and Privacy Policy.',
-            defaultStyle: TextStyle(
-              fontSize: getProportionateScreenHeight(12),
-              color: kTextColor,
-            ),
-            patternList: [
-              EasyRichTextPattern(
-                targetString: 'TnC',
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  color: kPrimaryColor,
-                ),
-                recognizer: TapGestureRecognizer()..onTap = () {},
-              ),
-              EasyRichTextPattern(
-                targetString: 'Privacy Policy',
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  color: kPrimaryColor,
-                ),
-                recognizer: TapGestureRecognizer()..onTap = () {},
-              ),
-            ],
-          ),
+          TNCText(textAlign: TextAlign.start),
         ],
       ),
     );

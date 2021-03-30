@@ -16,8 +16,9 @@ class _BodyState extends State<Body> {
     String _phoneNumber = arguments['phoneNumber'];
 
     return SafeArea(
-      minimum: EdgeInsets.symmetric(horizontal: 35),
+      minimum: EdgeInsets.only(left: 35, right: 35, bottom: 20),
       child: SingleChildScrollView(
+        reverse: true,
         child: Column(
           children: [
             NormalTemplate(

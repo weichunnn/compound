@@ -122,7 +122,7 @@ class _PhoneInputFormState extends State<PhoneInputForm> {
           // Make Input closer to Selector
           contentPadding: EdgeInsets.symmetric(
             horizontal: getProportionateScreenHeight(5),
-            vertical: getProportionateScreenHeight(15),
+            vertical: getProportionateScreenHeight(18),
           ),
           hintText: 'Phone Number',
           focusedBorder: InputBorder.none,
