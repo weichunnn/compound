@@ -12,7 +12,7 @@ class Body extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      minimum: EdgeInsets.symmetric(horizontal: 35),
+      minimum: EdgeInsets.only(left: 35, right: 35, bottom: 20),
       child: SingleChildScrollView(
         child: SizedBox(
           height: getAvailableHeight(),
@@ -21,14 +21,14 @@ class Body extends StatelessWidget {
               Text(
                 'Welcome Back',
                 style: TextStyle(
-                  fontSize: getProportionateScreenHeight(20),
+                  fontSize: getProportionateScreenHeight(24),
                   fontWeight: FontWeight.bold,
                 ),
               ),
               Text(
                 'Ready to take charge of your finance again?',
                 style: TextStyle(
-                  fontSize: getProportionateScreenHeight(12),
+                  fontSize: getProportionateScreenHeight(14),
                 ),
               ),
               SizedBox(
@@ -61,8 +61,8 @@ class Body extends StatelessWidget {
               ),
               Spacer(),
               Padding(
-                padding: EdgeInsets.symmetric(
-                  vertical: getProportionateScreenHeight(15),
+                padding: EdgeInsets.only(
+                  bottom: getProportionateScreenHeight(25),
                 ),
                 child: EasyRichText(
                   'Don\'t have an account? Sign Up',

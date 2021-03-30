@@ -1,3 +1,4 @@
+import 'package:compound/size_config.dart';
 import 'package:flutter/material.dart';
 
 import '../constants.dart';
@@ -22,7 +23,7 @@ class LinkText extends StatelessWidget {
         child: Text(
           text,
           style: TextStyle(
-            fontSize: fontSize,
+            fontSize: getProportionateScreenHeight(fontSize),
             fontWeight: FontWeight.bold,
             color: kPrimaryColor,
           ),

@@ -91,11 +91,11 @@ class _SignUpFormState extends State<SignUpForm> {
         children: [
           emailField(),
           SizedBox(
-            height: getProportionateScreenHeight(25),
+            height: getProportionateScreenHeight(15),
           ),
           passwordField(),
           SizedBox(
-            height: getProportionateScreenHeight(25),
+            height: getProportionateScreenHeight(15),
           ),
           confirmPasswordField(),
           SizedBox(
