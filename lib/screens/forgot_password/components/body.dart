@@ -10,13 +10,14 @@ class Body extends StatelessWidget {
     return SafeArea(
       minimum: EdgeInsets.only(left: 35, right: 35, bottom: 20),
       child: SingleChildScrollView(
+        reverse: true,
         child: Column(
           children: [
             NormalTemplate(
               image: 'assets/images/forgot_password.svg',
               title: 'Forgot your password?',
               caption:
-                  'Don’t worry! Enter your phone number below to receive your password reset instructions',
+                  'Don\'t worry! Enter your phone number below to receive your password reset instructions',
             ),
             SizedBox(
               height: getProportionateScreenHeight(25),

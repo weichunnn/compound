@@ -38,7 +38,7 @@ class _BodyState extends State<Body> {
             image: 'assets/images/2fa.svg',
             title: 'Secure Account',
             caption:
-                'Enable either 2-factor-authentication to secure your account from unwanted eyes',
+                'Enable 2-factor-authentication to secure your account from unwanted eyes',
           ),
           SizedBox(
             height: getProportionateScreenHeight(45),
