@@ -25,11 +25,14 @@ dependencies:
     sdk: flutter
   cupertino_icons: ^1.0.2
   easy_rich_text: ^0.5.3
+  flash: ^1.5.1
   flutter_svg: ^0.19.3
   form_field_validator: ^1.0.1
   intl_phone_number_input: ^0.6.0
+  local_auth: ^1.1.0
   pinput: ^1.1.0
   provider: ^4.3.3
+  shared_preferences: ^2.0.5
 
 dev_dependencies:
   flutter_test:
