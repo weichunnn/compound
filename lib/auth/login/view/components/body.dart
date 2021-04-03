@@ -2,11 +2,11 @@ import 'package:easy_rich_text/easy_rich_text.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
-import '../../../constants.dart';
-import '../../../size_config.dart';
+import '../../../../size_config.dart';
+import '../../../../constants.dart';
 import 'sign_in_form.dart';
-import '../../../components/central_divider.dart';
-import '../../../components/social_card.dart';
+import '../../../../components/central_divider.dart';
+import '../../../../components/social_card.dart';
 
 class Body extends StatelessWidget {
   @override

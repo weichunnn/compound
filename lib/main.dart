@@ -1,6 +1,8 @@
+import 'package:compound/auth/auth_repository.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'routes.dart';
+import 'auth/login/views/sign_in_screen.dart';
 import 'theme.dart';
 
 void main() {
@@ -14,8 +16,10 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Compound',
       theme: theme(),
-      initialRoute: '/',
-      routes: routes,
+      home: RepositoryProvider(
+        create: (context) => AuthRepository(),
+        child: SignInScreen(),
+      ),
     );
   }
 }
