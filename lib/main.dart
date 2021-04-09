@@ -1,8 +1,9 @@
-import 'package:compound/auth/auth_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'auth/login/views/sign_in_screen.dart';
+import 'app_navigation/app_navigator.dart';
+import 'app_navigation/session_cubit.dart';
+import 'auth/auth_repository.dart';
 import 'theme.dart';
 
 void main() {
@@ -18,7 +19,12 @@ class MyApp extends StatelessWidget {
       theme: theme(),
       home: RepositoryProvider(
         create: (context) => AuthRepository(),
-        child: SignInScreen(),
+        child: BlocProvider(
+          create: (context) => SessionCubit(
+            authRepo: context.read<AuthRepository>(),
+          ),
+          child: AppNavigator(),
+        ),
       ),
     );
   }
