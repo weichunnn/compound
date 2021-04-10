@@ -1,41 +1,16 @@
+import 'package:compound/auth/forgot_password.dart/forgot_password_event.dart';
+import 'package:compound/auth/phone_verification/phone_verification_event.dart';
 import 'package:flutter/material.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 
-import '../constants.dart';
 import '../size_config.dart';
 import 'default_button.dart';
 
-class PhoneInputForm extends StatefulWidget {
-  const PhoneInputForm({
-    Key key,
-    this.forVerification = false,
-  }) : super(key: key);
-
-  final bool forVerification;
-
-  @override
-  _PhoneInputFormState createState() => _PhoneInputFormState();
-}
-
-class _PhoneInputFormState extends State<PhoneInputForm> {
-  final _formKey = GlobalKey<FormState>();
-  // final initial = PhoneNumber(isoCode: 'MY');
-
-  String phoneNumber;
-  String userInput;
-  Color borderColor = kGreyColor;
-
-  String phoneValidator(value) {
-    if (value.isEmpty) {
-      // To cater for submitting form prior to any Input
-      setState(() {
-        borderColor = kErrorColor;
-      });
-      return '';
-    }
-
-    return null;
-  }
+class PhoneInputForm extends StatelessWidget {
+  static final _formKey = GlobalKey<FormState>();
+  final dynamic state;
+  final dynamic bloc;
+  PhoneInputForm({this.state, this.bloc});
 
   @override
   Widget build(BuildContext context) {
@@ -44,81 +19,66 @@ class _PhoneInputFormState extends State<PhoneInputForm> {
       child: Column(
         children: [
           phoneNumberField(),
-          SizedBox(
-            height: getProportionateScreenHeight(25),
-          ),
-          DefaultButton(
-            text: widget.forVerification ? 'Send Code' : 'Recover Code',
-            onPressed: () {
-              if (_formKey.currentState.validate()) {
-                _formKey.currentState.save();
-                if (widget.forVerification) {
-                  // Insert API call to backend for validation
-                  ScaffoldMessenger.of(_formKey.currentContext).showSnackBar(
-                    SnackBar(
-                      content: Text(phoneNumber),
-                    ),
-                  );
-                  Navigator.pushNamed(
-                    context,
-                    '/otp',
-                    arguments: {
-                      'phoneNumber': phoneNumber,
-                    },
-                  );
-                } else {
-                  // Insert API call to backend for validation
-                  ScaffoldMessenger.of(_formKey.currentContext).showSnackBar(
-                    SnackBar(
-                      content: Text('For Recovering Code'),
-                    ),
-                  );
-                }
-              }
-            },
-          ),
+          SizedBox(height: getProportionateScreenHeight(25)),
+          submitButton(context),
         ],
       ),
     );
   }
 
-  Container phoneNumberField() {
+  Widget submitButton(BuildContext context) {
+    return DefaultButton(
+      text: state.forVerification ? 'Send Code' : 'Recover Code',
+      onPressed: () {
+        if (_formKey.currentState.validate()) {
+          if (state.forVerification) {
+            bloc.add(PhoneVerificationSubmitted());
+          } else {
+            bloc.add(ForgotPasswordPhoneNumberSubmitted());
+          }
+        }
+      },
+    );
+  }
+
+  Widget phoneNumberField() {
+    String phoneNumber;
+    String userInput;
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 15, vertical: 5),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(getProportionateScreenHeight(15)),
         border: Border.all(
           width: 2.0,
-          color: borderColor,
+          color: state.borderColor,
         ),
       ),
       child: InternationalPhoneNumberInput(
+        keyboardType: TextInputType.phone,
+        autoValidateMode: AutovalidateMode.onUserInteraction,
         spaceBetweenSelectorAndTextField: 0,
         onInputChanged: (value) => {
-          phoneNumber = value.phoneNumber,
-          userInput = phoneNumber.replaceAll(value.dialCode, ''),
-          // RegExp(r'[A-Za-z]').hasMatch(userInput)) failed because input had been sanitized
-          // Don't need to check for alphabets because given keyboard is numerical
-          setState(() {
-            borderColor = userInput.isEmpty ? kErrorColor : kPrimaryColor;
-          })
+          // Sanitization to remove leading zeros
+          userInput = value.phoneNumber.replaceAll(value.dialCode, ''),
+          phoneNumber = value.dialCode + userInput,
+          state.forVerification
+              ? bloc.add(
+                  PhoneVerificationNumberChanged(phoneNumber: phoneNumber),
+                )
+              : bloc.add(
+                  ForgotPasswordPhoneNumberChanged(phoneNumber: phoneNumber),
+                )
         },
-        // Internal call for saving the phone number is using a future, so saving will yield null, reported as an Issue
-        // onChanged is used to save the latest
-        // onSaved: (value) => phoneNumber = value.phoneNumber,
-        // initialValue: initial,
         selectorTextStyle: TextStyle(
           fontSize: getProportionateScreenHeight(16),
           color: Colors.black,
         ),
         textStyle: TextStyle(
-          fontSize: getProportionateScreenHeight(18),
+          fontSize: getProportionateScreenHeight(16),
         ),
         inputDecoration: InputDecoration(
           // Prevent error text from pushing input box upwards
-          errorStyle: TextStyle(
-            height: 0,
-          ),
+          errorStyle: TextStyle(height: 0),
           // Make Input closer to Selector
           contentPadding: EdgeInsets.symmetric(
             horizontal: getProportionateScreenHeight(5),
@@ -130,7 +90,7 @@ class _PhoneInputFormState extends State<PhoneInputForm> {
           errorBorder: InputBorder.none,
           focusedErrorBorder: InputBorder.none,
         ),
-        validator: phoneValidator,
+        validator: (value) => state.phoneValidator(value),
         // searchBoxDecoration: InputDecoration(
         //   labelText: 'Country Name or Dial Code',
         // ),

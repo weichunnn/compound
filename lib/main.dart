@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'routes.dart';
+import 'app_navigation/app_navigator.dart';
+import 'app_navigation/session_cubit.dart';
+import 'auth/auth_repository.dart';
 import 'theme.dart';
 
 void main() {
@@ -14,8 +17,15 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Compound',
       theme: theme(),
-      initialRoute: '/',
-      routes: routes,
+      home: RepositoryProvider(
+        create: (context) => AuthRepository(),
+        child: BlocProvider(
+          create: (context) => SessionCubit(
+            authRepo: context.read<AuthRepository>(),
+          ),
+          child: AppNavigator(),
+        ),
+      ),
     );
   }
 }
