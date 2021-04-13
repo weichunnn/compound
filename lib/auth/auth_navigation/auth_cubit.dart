@@ -3,13 +3,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../auth_credentials.dart';
 import '../../app_navigation/session_cubit.dart';
 
-enum AuthState { login, signUp, phoneVerification, otp, forgotPassword }
+enum AuthState { login, signUp, otp, forgotPassword, resetPassword }
 
 class AuthCubit extends Cubit<AuthState> {
   final SessionCubit sessionCubit;
   final AuthState authState;
   AuthCredentials credentials;
-  bool forVerification;
 
   AuthCubit({
     this.sessionCubit,
@@ -23,20 +22,22 @@ class AuthCubit extends Cubit<AuthState> {
 
   void showForgotPassword() => emit(AuthState.forgotPassword);
 
-  void showPhoneVerification({String email, String password}) {
+  void showEmailVerificationOtp({
+    String email,
+    String password,
+  }) {
     credentials = credentials.copyWith(
       email: email,
       password: password,
     );
-    emit(AuthState.phoneVerification);
+    emit(AuthState.otp);
   }
 
-  void showOtp({String phoneNumber, bool verification}) {
-    forVerification = verification;
+  void showResetPassword({String email}) {
     credentials = credentials.copyWith(
-      phoneNumber: phoneNumber,
+      email: email,
     );
-    emit(AuthState.otp);
+    emit(AuthState.resetPassword);
   }
 
   // To exit the Auth Flow

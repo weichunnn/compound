@@ -1,8 +1,8 @@
 abstract class ForgotPasswordEvent {}
 
-class ForgotPasswordPhoneNumberChanged extends ForgotPasswordEvent {
-  final String phoneNumber;
-  ForgotPasswordPhoneNumberChanged({this.phoneNumber});
+class ForgotPasswordEmailChanged extends ForgotPasswordEvent {
+  final String email;
+  ForgotPasswordEmailChanged({this.email});
 }
 
-class ForgotPasswordPhoneNumberSubmitted extends ForgotPasswordEvent {}
+class ForgotPasswordSubmitted extends ForgotPasswordEvent {}

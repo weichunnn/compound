@@ -39,7 +39,7 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
           password: state.password,
         );
         yield state.copyWith(formSubmissionStatus: SubmissionSuccess());
-        authCubit.showPhoneVerification(
+        authCubit.showEmailVerificationOtp(
           email: state.email,
           password: state.password,
         );

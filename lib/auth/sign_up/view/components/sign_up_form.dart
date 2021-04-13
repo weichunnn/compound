@@ -47,6 +47,9 @@ class SignUpForm extends StatelessWidget {
           fontSize: getProportionateScreenHeight(16),
         ),
         keyboardType: TextInputType.emailAddress,
+        onChanged: (value) => context.read<SignUpBloc>().add(
+              SignUpEmailChanged(email: value),
+            ),
         validator: state.emailValidator,
         decoration: InputDecoration(
           labelText: 'Email Adresss',

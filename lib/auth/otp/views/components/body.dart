@@ -9,7 +9,7 @@ import 'otp_form.dart';
 class Body extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    String _phoneNumber = context.read<AuthCubit>().credentials.phoneNumber;
+    String _email = context.read<AuthCubit>().credentials.email;
     return SafeArea(
       minimum: EdgeInsets.only(left: 35, right: 35, bottom: 20),
       child: SingleChildScrollView(
@@ -19,8 +19,8 @@ class Body extends StatelessWidget {
             NormalTemplate(
               image: 'assets/images/forgot_password.svg',
               title: 'Verification Code',
-              caption: 'Please enter the code sent to $_phoneNumber',
-              bolded: _phoneNumber,
+              caption: 'Please enter the verfication code we sent to $_email',
+              bolded: _email,
             ),
             SizedBox(height: getProportionateScreenHeight(25)),
             OtpForm(),

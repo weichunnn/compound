@@ -1,8 +1,8 @@
-abstract class PhoneVerificationEvent {}
+// abstract class PhoneVerificationEvent {}
 
-class PhoneVerificationNumberChanged extends PhoneVerificationEvent {
-  final String phoneNumber;
-  PhoneVerificationNumberChanged({this.phoneNumber});
-}
+// class PhoneVerificationNumberChanged extends PhoneVerificationEvent {
+//   final String phoneNumber;
+//   PhoneVerificationNumberChanged({this.phoneNumber});
+// }
 
-class PhoneVerificationSubmitted extends PhoneVerificationEvent {}
+// class PhoneVerificationSubmitted extends PhoneVerificationEvent {}

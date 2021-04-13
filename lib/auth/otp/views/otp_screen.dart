@@ -19,9 +19,7 @@ class OtpScreen extends StatelessWidget {
           leading: IconButton(
             icon: Icon(Icons.arrow_back_ios_rounded),
             onPressed: () {
-              context.read<AuthCubit>().forVerification
-                  ? context.read<AuthCubit>().showPhoneVerification()
-                  : context.read<AuthCubit>().showForgotPassword();
+              context.read<AuthCubit>().showLogin();
             },
           ),
         ),

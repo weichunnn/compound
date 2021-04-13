@@ -45,26 +45,14 @@ class OtpBloc extends Bloc<OtpEvent, OtpState> {
         otp: event.otp,
         formSubmissionStatus: SubmissionInProgress(),
       );
-
       try {
-        if (authCubit.forVerification) {
-          await authRepo.sendVerificationOtpToBackend(
-            phoneNumber: authCubit.credentials.phoneNumber,
-            otp: state.otp,
-          );
-        } else {
-          await authRepo.sendForgotPasswordOtpToBackend(
-            phoneNumber: authCubit.credentials.phoneNumber,
-            otp: state.otp,
-          );
-        }
+        await authRepo.confirmSignUp(
+          email: authCubit.credentials.email,
+          otp: state.otp,
+        );
         yield state.copyWith(formSubmissionStatus: SubmissionSuccess());
         _tickerSubscription?.cancel();
-
-        authCubit.forVerification
-            ? authCubit.launchSession(credentials: authCubit.credentials)
-            : // To implement reset password page
-            authCubit.showLogin();
+        authCubit.launchSession(credentials: authCubit.credentials);
       } catch (e) {
         yield state.copyWith(formSubmissionStatus: SubmissionFailure(e));
       }

@@ -54,50 +54,59 @@ class OtpForm extends StatelessWidget {
 class PinInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final size = getProportionateScreenHeight(60);
+    final size = getProportionateScreenHeight(45);
     final TextEditingController _pinPutController = TextEditingController();
     final FocusNode _pinPutFocusNode = FocusNode();
 
-    return PinPut(
-      fieldsCount: 4,
-      onSubmit: (String otp) =>
-          context.read<OtpBloc>().add(OtpSubmitted(otp: otp)),
-      focusNode: _pinPutFocusNode,
-      controller: _pinPutController,
-      preFilledWidget: Align(
-        alignment: Alignment.bottomCenter,
-        child: Divider(
-          color: kPrimaryColor,
-          thickness: 2.5,
-          indent: 7.5,
-          endIndent: 7.5,
+    return Container(
+      alignment: Alignment.center,
+      height: getProportionateScreenHeight(75),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(15),
+        color: Colors.white,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.5),
+            blurRadius: 10.0,
+            spreadRadius: 0.0,
+          ),
+        ],
+      ),
+      padding: EdgeInsets.all(getProportionateScreenHeight(5)),
+      child: PinPut(
+        fieldsCount: 6,
+        onSubmit: (String otp) =>
+            context.read<OtpBloc>().add(OtpSubmitted(otp: otp)),
+        focusNode: _pinPutFocusNode,
+        controller: _pinPutController,
+        preFilledWidget: Align(
+          alignment: Alignment.bottomCenter,
+          child: Divider(
+            color: kPrimaryColor,
+            thickness: 3.5,
+            indent: 7.5,
+            endIndent: 7.5,
+          ),
         ),
+        textStyle: TextStyle(fontSize: getProportionateScreenHeight(28)),
+        eachFieldPadding: EdgeInsets.symmetric(
+          vertical: getProportionateScreenHeight(5),
+          horizontal: getProportionateScreenWidth(1),
+        ),
+        eachFieldMargin: EdgeInsets.all(0),
+        eachFieldHeight: size,
+        eachFieldWidth: size,
+        inputDecoration: InputDecoration(
+          contentPadding: EdgeInsets.zero,
+          border: InputBorder.none,
+          focusedBorder: InputBorder.none,
+          enabledBorder: InputBorder.none,
+          counterText: '',
+        ),
+        withCursor: true,
+        pinAnimationType: PinAnimationType.scale,
+        animationDuration: kAnimationDuration,
       ),
-      textStyle: TextStyle(fontSize: getProportionateScreenHeight(24)),
-      eachFieldPadding: EdgeInsets.all(getProportionateScreenHeight(10)),
-      eachFieldMargin: EdgeInsets.all(getProportionateScreenWidth(5)),
-      eachFieldHeight: size,
-      eachFieldWidth: size,
-      submittedFieldDecoration: boxDecoration(),
-      selectedFieldDecoration: boxDecoration(),
-      followingFieldDecoration: boxDecoration(),
-      inputDecoration: InputDecoration(
-        border: InputBorder.none,
-        focusedBorder: InputBorder.none,
-        enabledBorder: InputBorder.none,
-        counterText: '',
-      ),
-      withCursor: true,
-      pinAnimationType: PinAnimationType.scale,
-      animationDuration: kAnimationDuration,
-    );
-  }
-
-  BoxDecoration boxDecoration() {
-    return BoxDecoration(
-      color: Colors.white,
-      shape: BoxShape.rectangle,
-      borderRadius: BorderRadius.circular(getProportionateScreenWidth(10)),
     );
   }
 }

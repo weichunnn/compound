@@ -19,33 +19,26 @@ class AuthRepository {
     print('Sign Up successful');
   }
 
-  Future<String> sendVerificationOtpToBackend({
-    String phoneNumber,
+  Future<void> confirmSignUp({
+    String email,
     String otp,
   }) async {
-    await Future.delayed(Duration(seconds: 2));
-    return 'abc';
+    await Future.delayed(Duration(seconds: 1));
+    print('Confirmation successful');
   }
 
-  Future<String> sendVerificationOtpToUser({
-    String phoneNumber,
+  Future<String> sendForgotPasswordOtp({
+    String email,
   }) async {
     await Future.delayed(Duration(seconds: 3));
     return 'abc';
   }
 
-  Future<String> sendForgotPasswordOtpToBackend({
-    String phoneNumber,
+  Future<String> resetForgotPassword({
+    String password,
     String otp,
   }) async {
     await Future.delayed(Duration(seconds: 2));
-    return 'abc';
-  }
-
-  Future<String> sendForgotPasswordOtpToUser({
-    String phoneNumber,
-  }) async {
-    await Future.delayed(Duration(seconds: 3));
     return 'abc';
   }
 
