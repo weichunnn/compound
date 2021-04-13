@@ -9,10 +9,10 @@ import '../../forgot_password_event.dart';
 import '../../forgot_password_state.dart';
 
 class Body extends StatelessWidget {
+  static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
-    final _formKey = GlobalKey<FormState>();
-
     return SafeArea(
       minimum: EdgeInsets.only(left: 35, right: 35, bottom: 20),
       child: SingleChildScrollView(
