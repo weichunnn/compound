@@ -42,6 +42,7 @@ class OtpForm extends StatelessWidget {
                 ? (TapGestureRecognizer()
                   ..onTap = () {
                     context.read<OtpBloc>().add(StartTimer());
+                    context.read<OtpBloc>().add(ResendConfirmationEmail());
                   })
                 : null,
           ),

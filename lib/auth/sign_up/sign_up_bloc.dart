@@ -5,6 +5,7 @@ import '../../auth/auth_navigation/auth_cubit.dart';
 import '../auth_repository.dart';
 import 'sign_up_event.dart';
 import 'sign_up_state.dart';
+import '../../model/user.dart';
 
 class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
   final AuthRepository authRepo;
@@ -34,15 +35,12 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
       yield state.copyWith(formSubmissionStatus: SubmissionInProgress());
 
       try {
-        await authRepo.signUp(
+        User user = await authRepo.signUp(
           email: state.email,
           password: state.password,
         );
         yield state.copyWith(formSubmissionStatus: SubmissionSuccess());
-        authCubit.showEmailVerificationOtp(
-          email: state.email,
-          password: state.password,
-        );
+        authCubit.showEmailVerificationOtp(user: user);
       } catch (e) {
         yield state.copyWith(formSubmissionStatus: SubmissionFailure(e));
       }

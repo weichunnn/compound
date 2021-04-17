@@ -28,7 +28,7 @@ class ForgotPasswordBloc
         await authRepo.sendForgotPasswordOtp(
           email: state.email,
         );
-        authCubit.showResetPassword(email: state.email);
+        authCubit.showResetPassword();
         yield state.copyWith(formSubmissionStatus: SubmissionSuccess());
       } catch (e) {
         yield state.copyWith(formSubmissionStatus: SubmissionFailure(e));

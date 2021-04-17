@@ -5,6 +5,7 @@ import 'app_navigation/app_navigator.dart';
 import 'app_navigation/session_cubit.dart';
 import 'auth/auth_repository.dart';
 import 'theme.dart';
+import 'secrets.dart';
 
 void main() {
   runApp(MyApp());
@@ -18,7 +19,7 @@ class MyApp extends StatelessWidget {
       title: 'Compound',
       theme: theme(),
       home: RepositoryProvider(
-        create: (context) => AuthRepository(),
+        create: (context) => AuthRepository(userPool),
         child: BlocProvider(
           create: (context) => SessionCubit(
             authRepo: context.read<AuthRepository>(),

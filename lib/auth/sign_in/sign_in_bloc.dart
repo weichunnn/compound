@@ -5,6 +5,7 @@ import '../auth_repository.dart';
 import '../form_submission_status.dart';
 import 'sign_in_event.dart';
 import 'sign_in_state.dart';
+import '../../model/user.dart';
 
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
   final AuthCubit authCubit;
@@ -30,11 +31,12 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       yield state.copyWith(formSubmissionStatus: SubmissionInProgress());
 
       try {
-        await authRepo.login();
+        User user = await authRepo.login(
+          email: state.email,
+          password: state.password,
+        );
         yield state.copyWith(formSubmissionStatus: SubmissionSuccess());
-        authCubit.credentials =
-            authCubit.credentials.copyWith(email: state.email);
-        authCubit.launchSession(credentials: authCubit.credentials);
+        authCubit.launchSession(user: user);
       } catch (e) {
         yield state.copyWith(formSubmissionStatus: SubmissionFailure(e));
       }

@@ -7,7 +7,6 @@ import '../../auth/auth_navigation/auth_cubit.dart';
 import '../../auth/auth_navigation/auth_navigator.dart';
 import '../../welcome/splash/views/splash_screen.dart';
 import '../../welcome/introduction/introduction_screen.dart';
-import '../../auth/auth_credentials.dart';
 
 class WelcomeNavigator extends StatelessWidget {
   @override
@@ -25,7 +24,6 @@ class WelcomeNavigator extends StatelessWidget {
               child: BlocProvider(
                 create: (context) => AuthCubit(
                   sessionCubit: context.read<SessionCubit>(),
-                  credentials: AuthCredentials(),
                   authState: context.read<WelcomeCubit>().authLoginFlag
                       ? AuthState.login
                       : AuthState.signUp,
