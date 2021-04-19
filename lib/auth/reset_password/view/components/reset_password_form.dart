@@ -47,10 +47,12 @@ class ResetPasswordForm extends StatelessWidget {
         onChanged: (value) => context.read<ResetPasswordBloc>().add(
               ResetPasswordOtpChanged(otp: value),
             ),
+        obscureText: true,
+        obscuringCharacter: '*',
         validator: state.otpValidator,
         decoration: InputDecoration(
           labelText: 'OTP',
-          hintText: '\* \* \* * * *',
+          hintText: '* * * * * *',
         ),
       );
     });
