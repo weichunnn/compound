@@ -7,6 +7,7 @@ class ResetPasswordState {
   final String password;
   final String confirmPassword;
   final bool obscurePassword;
+  final String errorMessage;
   final FormSubmissionStatus formSubmissionStatus;
 
   // Validators for Form
@@ -61,6 +62,7 @@ class ResetPasswordState {
     this.password = '',
     this.confirmPassword = '',
     this.obscurePassword = true,
+    this.errorMessage = '',
     this.formSubmissionStatus = const InitialFormStatus(),
   });
 
@@ -69,6 +71,7 @@ class ResetPasswordState {
     String password,
     String confirmPassword,
     bool obscurePassword,
+    String errorMessage,
     FormSubmissionStatus formSubmissionStatus,
   }) {
     return ResetPasswordState(
@@ -76,6 +79,7 @@ class ResetPasswordState {
       password: password ?? this.password,
       confirmPassword: confirmPassword ?? this.confirmPassword,
       obscurePassword: obscurePassword ?? this.obscurePassword,
+      errorMessage: errorMessage ?? this.errorMessage,
       formSubmissionStatus: formSubmissionStatus ?? this.formSubmissionStatus,
     );
   }

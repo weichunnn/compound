@@ -15,6 +15,10 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
 
   @override
   Stream<SignUpState> mapEventToState(SignUpEvent event) async* {
+    if (event is SignUpResetForm) {
+      yield state.copyWith(formSubmissionStatus: InitialFormStatus());
+    }
+
     if (event is SignUpEmailChanged) {
       yield state.copyWith(email: event.email);
     }
@@ -42,7 +46,19 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
         yield state.copyWith(formSubmissionStatus: SubmissionSuccess());
         authCubit.showEmailVerificationOtp(user: user);
       } catch (e) {
-        yield state.copyWith(formSubmissionStatus: SubmissionFailure(e));
+        String errorMessage;
+        if (e.code == 'UsernameExistsException' ||
+            e.code == 'InvalidParameterException' ||
+            e.code == 'InvalidPasswordException' ||
+            e.code == 'ResourceNotFoundException') {
+          errorMessage = e.message;
+        } else {
+          errorMessage = 'An unknown error had occurred. Please try again.';
+        }
+        yield state.copyWith(
+          formSubmissionStatus: SubmissionFailure(e),
+          errorMessage: errorMessage,
+        );
       }
     }
   }

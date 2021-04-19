@@ -23,6 +23,10 @@ class OtpBloc extends Bloc<OtpEvent, OtpState> {
 
   @override
   Stream<OtpState> mapEventToState(OtpEvent event) async* {
+    if (event is OtpResetForm) {
+      yield state.copyWith(formSubmissionStatus: InitialFormStatus());
+    }
+
     if (event is Tick) {
       yield state.copyWith(countdown: event.duration);
       if (event.duration > 0) {
@@ -65,10 +69,22 @@ class OtpBloc extends Bloc<OtpEvent, OtpState> {
           email: authCubit.currentUser.email,
           password: authCubit.currentUser.password,
         );
-
         authCubit.launchSession(user: user);
       } catch (e) {
-        yield state.copyWith(formSubmissionStatus: SubmissionFailure(e));
+        String errorMessage;
+        if (e.code == 'InvalidParameterException' ||
+            e.code == 'CodeMismatchException' ||
+            e.code == 'NotAuthorizedException' ||
+            e.code == 'UserNotFoundException' ||
+            e.code == 'ResourceNotFoundException') {
+          errorMessage = e.message;
+        } else {
+          errorMessage = 'An unknown error had occurred. Please try again.';
+        }
+        yield state.copyWith(
+          formSubmissionStatus: SubmissionFailure(e),
+          errorMessage: errorMessage,
+        );
       }
     }
   }

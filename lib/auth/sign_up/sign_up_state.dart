@@ -7,6 +7,7 @@ class SignUpState {
   final String password;
   final String confirmPassword;
   final bool obscurePassword;
+  final String errorMessage;
   final FormSubmissionStatus formSubmissionStatus;
 
   // Validators for Form
@@ -66,6 +67,7 @@ class SignUpState {
     this.password = '',
     this.confirmPassword = '',
     this.obscurePassword = true,
+    this.errorMessage = '',
     this.formSubmissionStatus = const InitialFormStatus(),
   });
 
@@ -74,6 +76,7 @@ class SignUpState {
     String password,
     String confirmPassword,
     bool obscurePassword,
+    String errorMessage,
     FormSubmissionStatus formSubmissionStatus,
   }) {
     return SignUpState(
@@ -81,6 +84,7 @@ class SignUpState {
       password: password ?? this.password,
       confirmPassword: confirmPassword ?? this.confirmPassword,
       obscurePassword: obscurePassword ?? this.obscurePassword,
+      errorMessage: errorMessage ?? this.errorMessage,
       formSubmissionStatus: formSubmissionStatus ?? this.formSubmissionStatus,
     );
   }

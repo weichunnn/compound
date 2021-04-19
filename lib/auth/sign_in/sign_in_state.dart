@@ -6,6 +6,7 @@ class LoginState {
   final String email;
   final String password;
   final bool obscurePassword;
+  final String errorMessage;
   final FormSubmissionStatus formSubmissionStatus;
 
   // Validators for Form
@@ -28,6 +29,7 @@ class LoginState {
     this.email = '',
     this.password = '',
     this.obscurePassword = true,
+    this.errorMessage = '',
     this.formSubmissionStatus,
   });
 
@@ -35,12 +37,14 @@ class LoginState {
     String email,
     String password,
     bool obscurePassword,
+    String errorMessage,
     FormSubmissionStatus formSubmissionStatus,
   }) {
     return LoginState(
       email: email ?? this.email,
       password: password ?? this.password,
       obscurePassword: obscurePassword ?? this.obscurePassword,
+      errorMessage: errorMessage ?? this.errorMessage,
       formSubmissionStatus: formSubmissionStatus ?? this.formSubmissionStatus,
     );
   }

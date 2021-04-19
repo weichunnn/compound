@@ -15,4 +15,6 @@ class ObscurePassword extends LoginEvent {
   ObscurePassword({this.obscurePassword});
 }
 
+class LoginResetForm extends LoginEvent {}
+
 class LoginSubmitted extends LoginEvent {}

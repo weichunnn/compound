@@ -16,6 +16,10 @@ class ResetPasswordBloc extends Bloc<ResetPasswordEvent, ResetPasswordState> {
   @override
   Stream<ResetPasswordState> mapEventToState(ResetPasswordEvent event) async* {
     if (event is ResetPasswordOtpChanged) {
+      yield state.copyWith(formSubmissionStatus: InitialFormStatus());
+    }
+
+    if (event is ResetPasswordOtpChanged) {
       yield state.copyWith(otp: event.otp);
     }
 
@@ -39,7 +43,19 @@ class ResetPasswordBloc extends Bloc<ResetPasswordEvent, ResetPasswordState> {
         yield state.copyWith(formSubmissionStatus: SubmissionSuccess());
         authCubit.showLogin();
       } catch (e) {
-        yield state.copyWith(formSubmissionStatus: SubmissionFailure(e));
+        String errorMessage;
+        if (e.code == 'InvalidParameterException' ||
+            e.code == 'NotAuthorizedException' ||
+            e.code == 'CodeMismatchException' ||
+            e.code == 'ResourceNotFoundException') {
+          errorMessage = e.message;
+        } else {
+          errorMessage = 'An unknown error had occurred. Please try again.';
+        }
+        yield state.copyWith(
+          formSubmissionStatus: SubmissionFailure(e),
+          errorMessage: errorMessage,
+        );
       }
     }
   }

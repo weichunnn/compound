@@ -2,7 +2,7 @@ import 'package:amazon_cognito_identity_dart_2/cognito.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../secrets.dart';
-import '../storage.dart';
+import 'storage.dart';
 import '../model/user.dart';
 
 class AuthRepository {

@@ -15,6 +15,10 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
 
   @override
   Stream<LoginState> mapEventToState(LoginEvent event) async* {
+    if (event is LoginResetForm) {
+      yield state.copyWith(formSubmissionStatus: InitialFormStatus());
+    }
+
     if (event is LoginEmailChanged) {
       yield state.copyWith(email: event.email);
     }
@@ -38,7 +42,19 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         yield state.copyWith(formSubmissionStatus: SubmissionSuccess());
         authCubit.launchSession(user: user);
       } catch (e) {
-        yield state.copyWith(formSubmissionStatus: SubmissionFailure(e));
+        String errorMessage;
+        if (e.code == 'InvalidParameterException' ||
+            e.code == 'NotAuthorizedException' ||
+            e.code == 'UserNotFoundException' ||
+            e.code == 'ResourceNotFoundException') {
+          errorMessage = e.message;
+        } else {
+          errorMessage = 'An unknown error had occurred. Please try again.';
+        }
+        yield state.copyWith(
+          formSubmissionStatus: SubmissionFailure(e),
+          errorMessage: errorMessage,
+        );
       }
     }
   }
