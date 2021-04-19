@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:provider/provider.dart';
 
-import '../../auth_navigation/auth_cubit.dart';
 import '../../auth_repository.dart';
-import '../otp_bloc.dart';
-import '../otp_event.dart';
-import '../ticker.dart';
+import '../reset_password_bloc.dart';
 import 'components/body.dart';
+import '../../../auth/auth_navigation/auth_cubit.dart';
 
-class OtpScreen extends StatelessWidget {
+class ResetPasswordScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -19,16 +18,15 @@ class OtpScreen extends StatelessWidget {
           leading: IconButton(
             icon: Icon(Icons.arrow_back_ios_rounded),
             onPressed: () {
-              context.read<AuthCubit>().showLogin();
+              context.read<AuthCubit>().showForgotPassword();
             },
           ),
         ),
         body: BlocProvider(
-          create: (context) => OtpBloc(
-            ticker: Ticker(),
-            authRepo: context.read<AuthRepository>(),
+          create: (context) => ResetPasswordBloc(
             authCubit: context.read<AuthCubit>(),
-          )..add(StartTimer()),
+            authRepo: context.read<AuthRepository>(),
+          ),
           child: Body(),
         ),
       ),

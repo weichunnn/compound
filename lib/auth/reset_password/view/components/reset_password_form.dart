@@ -4,12 +4,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../constants.dart';
 import '../../../../size_config.dart';
 import '../../../../components/default_button.dart';
-import '../../../../components/tnc_text.dart';
-import '../../sign_up_bloc.dart';
-import '../../sign_up_event.dart';
-import '../../sign_up_state.dart';
+import '../../reset_password_bloc.dart';
+import '../../reset_password_event.dart';
+import '../../reset_password_state.dart';
 
-class SignUpForm extends StatelessWidget {
+class ResetPasswordForm extends StatelessWidget {
   static final _formKey = GlobalKey<FormState>();
 
   @override
@@ -18,57 +17,56 @@ class SignUpForm extends StatelessWidget {
       key: _formKey,
       child: Column(
         children: [
-          emailField(),
+          otpField(),
           SizedBox(height: getProportionateScreenHeight(15)),
           passwordField(),
           SizedBox(height: getProportionateScreenHeight(15)),
           confirmPasswordField(),
           SizedBox(height: getProportionateScreenHeight(15)),
           DefaultButton(
-            text: 'Sign Up',
+            text: 'Reset Password',
             onPressed: () {
               if (_formKey.currentState.validate()) {
-                context.read<SignUpBloc>().add(SignUpSubmitted());
+                context.read<ResetPasswordBloc>().add(ResetPasswordSubmitted());
               }
             },
           ),
-          SizedBox(height: getProportionateScreenHeight(5)),
-          TNCText(textAlign: TextAlign.start),
         ],
       ),
     );
   }
 
-  Widget emailField() {
-    return BlocBuilder<SignUpBloc, SignUpState>(builder: (context, state) {
+  Widget otpField() {
+    return BlocBuilder<ResetPasswordBloc, ResetPasswordState>(
+        builder: (context, state) {
       return TextFormField(
         autovalidateMode: AutovalidateMode.onUserInteraction,
         style: TextStyle(
           fontSize: getProportionateScreenHeight(16),
         ),
-        keyboardType: TextInputType.emailAddress,
-        onChanged: (value) => context.read<SignUpBloc>().add(
-              SignUpEmailChanged(email: value),
+        onChanged: (value) => context.read<ResetPasswordBloc>().add(
+              ResetPasswordOtpChanged(otp: value),
             ),
-        validator: state.emailValidator,
+        validator: state.otpValidator,
         decoration: InputDecoration(
-          labelText: 'Email Adresss',
-          hintText: 'example@gmail.com',
+          labelText: 'OTP',
+          hintText: '\* \* \* * * *',
         ),
       );
     });
   }
 
   Widget passwordField() {
-    return BlocBuilder<SignUpBloc, SignUpState>(builder: (context, state) {
+    return BlocBuilder<ResetPasswordBloc, ResetPasswordState>(
+        builder: (context, state) {
       return TextFormField(
         autovalidateMode: AutovalidateMode.onUserInteraction,
         style: TextStyle(
           fontSize: getProportionateScreenHeight(16),
         ),
         obscureText: state.obscurePassword,
-        onChanged: (value) => context.read<SignUpBloc>().add(
-              SignUpPasswordChanged(password: value),
+        onChanged: (value) => context.read<ResetPasswordBloc>().add(
+              ResetPasswordPasswordChanged(password: value),
             ),
         validator: state.passwordValidator,
         decoration: InputDecoration(
@@ -83,7 +81,7 @@ class SignUpForm extends StatelessWidget {
                 state.obscurePassword ? Icons.visibility_off : Icons.visibility,
               ),
               onPressed: () {
-                context.read<SignUpBloc>().add(
+                context.read<ResetPasswordBloc>().add(
                       ObscurePassword(obscurePassword: !state.obscurePassword),
                     );
               },
@@ -96,15 +94,16 @@ class SignUpForm extends StatelessWidget {
   }
 
   Widget confirmPasswordField() {
-    return BlocBuilder<SignUpBloc, SignUpState>(builder: (context, state) {
+    return BlocBuilder<ResetPasswordBloc, ResetPasswordState>(
+        builder: (context, state) {
       return TextFormField(
         autovalidateMode: AutovalidateMode.onUserInteraction,
         style: TextStyle(
           fontSize: getProportionateScreenHeight(16),
         ),
         obscureText: true,
-        onChanged: (value) => context.read<SignUpBloc>().add(
-              SignUpConfirmPasswordChanged(confirmPassword: value),
+        onChanged: (value) => context.read<ResetPasswordBloc>().add(
+              ResetPasswordConfirmPasswordChanged(confirmPassword: value),
             ),
         validator: (value) => state.confirmPasswordValidator(value),
         decoration: InputDecoration(

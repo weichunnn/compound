@@ -1,10 +1,9 @@
 import 'package:flash/flash.dart';
 import 'package:flutter/material.dart';
 
-import '../constants.dart';
 import '../size_config.dart';
 
-Future toast({context, text}) {
+Future toast({context, text, backgroundColor, textColor, iconColor}) {
   return showFlash(
     context: context,
     duration: Duration(seconds: 3),
@@ -16,15 +15,16 @@ Future toast({context, text}) {
           horizontal: getProportionateScreenWidth(25),
         ),
         borderRadius: BorderRadius.all(Radius.circular(10)),
-        backgroundColor: kErrorColor,
+        backgroundColor: backgroundColor,
         boxShadows: [
           BoxShadow(
             color: Colors.grey.withOpacity(0.5),
-            spreadRadius: 2.5,
-            blurRadius: 7.5,
-            offset: Offset(0, 5),
+            blurRadius: 5.0,
+            spreadRadius: 0,
+            offset: Offset(5, 5),
           ),
         ],
+        barrierDismissible: false,
         enableDrag: true,
         horizontalDismissDirection: HorizontalDismissDirection.horizontal,
         alignment: Alignment.topCenter,
@@ -32,8 +32,8 @@ Future toast({context, text}) {
           message: Text(
             text,
             style: TextStyle(
-              color: Colors.white,
-              fontSize: getProportionateScreenHeight(16),
+              color: textColor,
+              fontSize: getProportionateScreenHeight(14),
             ),
           ),
           icon: Padding(
@@ -42,8 +42,8 @@ Future toast({context, text}) {
             ),
             child: Icon(
               Icons.info,
-              color: Colors.white,
-              size: getProportionateScreenHeight(30),
+              color: iconColor,
+              size: getProportionateScreenHeight(25),
             ),
           ),
         ),

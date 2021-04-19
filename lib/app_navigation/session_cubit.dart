@@ -1,8 +1,8 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../auth/auth_credentials.dart';
 import '../auth/auth_repository.dart';
 import 'session_state.dart';
+import '../model/user.dart';
 
 class SessionCubit extends Cubit<SessionState> {
   final AuthRepository authRepo;
@@ -12,23 +12,29 @@ class SessionCubit extends Cubit<SessionState> {
     attemptAutoLogin();
   }
 
-  void attemptAutoLogin() async {
+  Future<void> attemptAutoLogin() async {
+    await authRepo.init();
     try {
-      final userId = await authRepo.attemptAutoLogin();
-      emit(Authenticated(user: userId));
+      bool sessionStatus = await authRepo.checkAuthenticated();
+      User currentUser = await authRepo.getCurrentUser();
+      if (sessionStatus) {
+        emit(Authenticated(user: currentUser));
+      } else {
+        showAuth();
+      }
     } catch (e) {
-      emit(Unauthenticated());
+      showAuth();
     }
   }
 
-  void showAuth() => emit(Unauthenticated());
-
-  void showSession(AuthCredentials credentials) {
-    emit(Authenticated(user: credentials));
+  void showSession({User user}) {
+    emit(Authenticated(user: user));
   }
 
   void signOut() {
     authRepo.signOut();
-    emit(Unauthenticated());
+    showAuth();
   }
+
+  void showAuth() => emit(Unauthenticated());
 }

@@ -7,6 +7,8 @@ class OtpSubmitted extends OtpEvent {
 
 class StartTimer extends OtpEvent {}
 
+class ResendConfirmationEmail extends OtpEvent {}
+
 class Tick extends OtpEvent {
   final int duration;
   Tick({this.duration});

@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../components/normal_template.dart';
 import '../../../../constants.dart';
 import '../../../../size_config.dart';
+import '../../../../auth/reset_password/view/components/reset_password_form.dart';
+import '../../../../components/normal_template.dart';
 import '../../../form_submission_status.dart';
-import '../../otp_bloc.dart';
-import '../../otp_state.dart';
-import 'otp_form.dart';
+import '../../reset_password_bloc.dart';
+import '../../reset_password_state.dart';
 import '../../../../components/loader.dart';
 import '../../../../components/toast.dart';
 
@@ -15,7 +15,7 @@ class Body extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     BuildContext loadingDialogContext;
-    return BlocListener<OtpBloc, OtpState>(
+    return BlocListener<ResetPasswordBloc, ResetPasswordState>(
       listener: (context, state) {
         final formStatus = state.formSubmissionStatus;
         if (formStatus is SubmissionFailure ||
@@ -49,13 +49,13 @@ class Body extends StatelessWidget {
           child: Column(
             children: [
               NormalTemplate(
-                image: 'assets/images/forgot_password.svg',
-                title: 'Verification Code',
+                image: 'assets/images/reset_password.svg',
+                title: 'Reset Password',
                 caption:
-                    'Please enter the verfication code we sent to your email',
+                    'Enter the OTP received, and your new password below. We are just being extra safe to protect your account.',
               ),
               SizedBox(height: getProportionateScreenHeight(25)),
-              OtpForm(),
+              ResetPasswordForm(),
             ],
           ),
         ),

@@ -1,9 +1,9 @@
 import 'package:form_field_validator/form_field_validator.dart';
 
-import '../form_submission_status.dart';
+import '../../auth/form_submission_status.dart';
 
-class SignUpState {
-  final String email;
+class ResetPasswordState {
+  final String otp;
   final String password;
   final String confirmPassword;
   final bool obscurePassword;
@@ -11,13 +11,10 @@ class SignUpState {
   final FormSubmissionStatus formSubmissionStatus;
 
   // Validators for Form
-  final emailValidator = MultiValidator(
+  final otpValidator = MultiValidator(
     [
       RequiredValidator(
-        errorText: 'Email is required',
-      ),
-      EmailValidator(
-        errorText: 'Email must be valid',
+        errorText: 'OTP is required',
       ),
     ],
   );
@@ -42,8 +39,6 @@ class SignUpState {
     ],
   );
 
-  // Attempted to use MatchValidator with RequiredValidator
-  // Both are of diffrent type where MatchValidator returns a String and RequiredValidator returns a Function
   String confirmPasswordValidator(value) {
     if (value.isEmpty) {
       return 'Password is required';
@@ -62,8 +57,8 @@ class SignUpState {
     return false;
   }
 
-  SignUpState({
-    this.email = '',
+  ResetPasswordState({
+    this.otp = '',
     this.password = '',
     this.confirmPassword = '',
     this.obscurePassword = true,
@@ -71,16 +66,16 @@ class SignUpState {
     this.formSubmissionStatus = const InitialFormStatus(),
   });
 
-  SignUpState copyWith({
-    String email,
+  ResetPasswordState copyWith({
+    String otp,
     String password,
     String confirmPassword,
     bool obscurePassword,
     String errorMessage,
     FormSubmissionStatus formSubmissionStatus,
   }) {
-    return SignUpState(
-      email: email ?? this.email,
+    return ResetPasswordState(
+      otp: otp ?? this.otp,
       password: password ?? this.password,
       confirmPassword: confirmPassword ?? this.confirmPassword,
       obscurePassword: obscurePassword ?? this.obscurePassword,

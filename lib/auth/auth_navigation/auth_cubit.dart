@@ -1,20 +1,18 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../auth_credentials.dart';
 import '../../app_navigation/session_cubit.dart';
+import '../../model/user.dart';
 
-enum AuthState { login, signUp, phoneVerification, otp, forgotPassword }
+enum AuthState { login, signUp, otp, forgotPassword, resetPassword }
 
 class AuthCubit extends Cubit<AuthState> {
   final SessionCubit sessionCubit;
   final AuthState authState;
-  AuthCredentials credentials;
-  bool forVerification;
+  User currentUser;
 
   AuthCubit({
     this.sessionCubit,
     this.authState,
-    this.credentials,
   }) : super(authState);
 
   void showLogin() => emit(AuthState.login);
@@ -23,24 +21,17 @@ class AuthCubit extends Cubit<AuthState> {
 
   void showForgotPassword() => emit(AuthState.forgotPassword);
 
-  void showPhoneVerification({String email, String password}) {
-    credentials = credentials.copyWith(
-      email: email,
-      password: password,
-    );
-    emit(AuthState.phoneVerification);
-  }
-
-  void showOtp({String phoneNumber, bool verification}) {
-    forVerification = verification;
-    credentials = credentials.copyWith(
-      phoneNumber: phoneNumber,
-    );
+  void showEmailVerificationOtp({User user}) {
+    currentUser = user;
     emit(AuthState.otp);
   }
 
+  void showResetPassword() {
+    emit(AuthState.resetPassword);
+  }
+
   // To exit the Auth Flow
-  void launchSession({AuthCredentials credentials}) {
-    sessionCubit.showSession(credentials);
+  void launchSession({User user}) {
+    sessionCubit.showSession(user: user);
   }
 }

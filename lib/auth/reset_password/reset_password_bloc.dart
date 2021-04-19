@@ -1,51 +1,48 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../form_submission_status.dart';
-import '../../auth/auth_navigation/auth_cubit.dart';
+import '../../auth/reset_password/reset_password_event.dart';
+import '../../auth/reset_password/reset_password_state.dart';
 import '../auth_repository.dart';
-import 'sign_up_event.dart';
-import 'sign_up_state.dart';
-import '../../model/user.dart';
+import '../../auth/auth_navigation/auth_cubit.dart';
+import '../form_submission_status.dart';
 
-class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
+class ResetPasswordBloc extends Bloc<ResetPasswordEvent, ResetPasswordState> {
   final AuthRepository authRepo;
   final AuthCubit authCubit;
 
-  SignUpBloc({this.authRepo, this.authCubit}) : super(SignUpState());
+  ResetPasswordBloc({this.authCubit, this.authRepo})
+      : super(ResetPasswordState());
 
   @override
-  Stream<SignUpState> mapEventToState(SignUpEvent event) async* {
-    if (event is SignUpEmailChanged) {
-      yield state.copyWith(email: event.email);
+  Stream<ResetPasswordState> mapEventToState(ResetPasswordEvent event) async* {
+    if (event is ResetPasswordOtpChanged) {
+      yield state.copyWith(otp: event.otp);
     }
 
-    if (event is SignUpPasswordChanged) {
+    if (event is ResetPasswordPasswordChanged) {
       yield state.copyWith(password: event.password);
     }
-
-    if (event is SignUpConfirmPasswordChanged) {
+    if (event is ResetPasswordConfirmPasswordChanged) {
       yield state.copyWith(confirmPassword: event.confirmPassword);
     }
-
     if (event is ObscurePassword) {
       yield state.copyWith(obscurePassword: event.obscurePassword);
     }
 
-    if (event is SignUpSubmitted) {
+    if (event is ResetPasswordSubmitted) {
       yield state.copyWith(formSubmissionStatus: SubmissionInProgress());
-
       try {
-        User user = await authRepo.signUp(
-          email: state.email,
+        await authRepo.resetForgotPassword(
+          otp: state.otp,
           password: state.password,
         );
         yield state.copyWith(formSubmissionStatus: SubmissionSuccess());
-        authCubit.showEmailVerificationOtp(user: user);
+        authCubit.showLogin();
       } catch (e) {
         String errorMessage;
-        if (e.code == 'UsernameExistsException' ||
-            e.code == 'InvalidParameterException' ||
-            e.code == 'InvalidPasswordException' ||
+        if (e.code == 'InvalidParameterException' ||
+            e.code == 'NotAuthorizedException' ||
+            e.code == 'CodeMismatchException' ||
             e.code == 'ResourceNotFoundException') {
           errorMessage = e.message;
         } else {

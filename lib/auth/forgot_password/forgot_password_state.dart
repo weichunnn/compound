@@ -2,11 +2,8 @@ import 'package:form_field_validator/form_field_validator.dart';
 
 import '../form_submission_status.dart';
 
-class LoginState {
+class ForgotPasswordState {
   final String email;
-  final String password;
-  final bool obscurePassword;
-  final String errorMessage;
   final FormSubmissionStatus formSubmissionStatus;
 
   // Validators for Form
@@ -21,30 +18,17 @@ class LoginState {
     ],
   );
 
-  final passwordValidator = RequiredValidator(
-    errorText: 'Password is required',
-  );
-
-  LoginState({
+  ForgotPasswordState({
     this.email = '',
-    this.password = '',
-    this.obscurePassword = true,
-    this.errorMessage = '',
-    this.formSubmissionStatus,
+    this.formSubmissionStatus = const InitialFormStatus(),
   });
 
-  LoginState copyWith({
+  ForgotPasswordState copyWith({
     String email,
-    String password,
-    bool obscurePassword,
-    String errorMessage,
     FormSubmissionStatus formSubmissionStatus,
   }) {
-    return LoginState(
+    return ForgotPasswordState(
       email: email ?? this.email,
-      password: password ?? this.password,
-      obscurePassword: obscurePassword ?? this.obscurePassword,
-      errorMessage: errorMessage ?? this.errorMessage,
       formSubmissionStatus: formSubmissionStatus ?? this.formSubmissionStatus,
     );
   }

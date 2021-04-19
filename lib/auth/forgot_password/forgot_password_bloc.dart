@@ -17,22 +17,21 @@ class ForgotPasswordBloc
   @override
   Stream<ForgotPasswordState> mapEventToState(
       ForgotPasswordEvent event) async* {
-    if (event is ForgotPasswordPhoneNumberChanged) {
-      yield state.copyWith(phoneNumber: event.phoneNumber);
+    if (event is ForgotPasswordEmailChanged) {
+      yield state.copyWith(email: event.email);
     }
 
-    if (event is ForgotPasswordPhoneNumberSubmitted) {
+    if (event is ForgotPasswordSubmitted) {
+      yield state.copyWith(formSubmissionStatus: SubmissionInProgress());
+
       try {
-        await authRepo.sendForgotPasswordOtpToUser(
-          phoneNumber: state.phoneNumber,
+        await authRepo.sendForgotPasswordOtp(
+          email: state.email,
         );
+        authCubit.showResetPassword();
         yield state.copyWith(formSubmissionStatus: SubmissionSuccess());
-        authCubit.showOtp(
-          phoneNumber: state.phoneNumber,
-          verification: false,
-        );
       } catch (e) {
-        yield state.copyWith(formSubmissionStatus: SubmissionFailure(e));
+        yield state.copyWith(formSubmissionStatus: SubmissionFailure());
       }
     }
   }

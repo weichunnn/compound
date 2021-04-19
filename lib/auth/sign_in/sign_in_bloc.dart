@@ -5,6 +5,7 @@ import '../auth_repository.dart';
 import '../form_submission_status.dart';
 import 'sign_in_event.dart';
 import 'sign_in_state.dart';
+import '../../model/user.dart';
 
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
   final AuthCubit authCubit;
@@ -28,15 +29,39 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
 
     if (event is LoginSubmitted) {
       yield state.copyWith(formSubmissionStatus: SubmissionInProgress());
-
       try {
-        await authRepo.login();
-        yield state.copyWith(formSubmissionStatus: SubmissionSuccess());
-        authCubit.credentials =
-            authCubit.credentials.copyWith(email: state.email);
-        authCubit.launchSession(credentials: authCubit.credentials);
+        User user = await authRepo.login(
+          email: state.email,
+          password: state.password,
+        );
+
+        if (!user.verified) {
+          yield state.copyWith(
+            formSubmissionStatus: SubmissionFailure(),
+            errorMessage: 'Please verify your email account.',
+          );
+          user.password = state.password;
+          authRepo.resendConfirmationEmail(email: state.email);
+          authCubit.showEmailVerificationOtp(user: user);
+        } else {
+          yield state.copyWith(formSubmissionStatus: SubmissionSuccess());
+          authCubit.launchSession(user: user);
+        }
       } catch (e) {
-        yield state.copyWith(formSubmissionStatus: SubmissionFailure(e));
+        String errorMessage;
+        if (e.code == 'InvalidParameterException' ||
+            e.code == 'NotAuthorizedException' ||
+            e.code == 'UserNotFoundException' ||
+            e.code == 'ResourceNotFoundException') {
+          errorMessage = e.message;
+        } else {
+          errorMessage = 'An unknown error had occurred. Please try again.';
+        }
+        yield state.copyWith(
+          formSubmissionStatus: SubmissionFailure(),
+          errorMessage: errorMessage,
+        );
+        yield state.copyWith(formSubmissionStatus: InitialFormStatus());
       }
     }
   }
