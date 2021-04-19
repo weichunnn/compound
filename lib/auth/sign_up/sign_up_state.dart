@@ -36,6 +36,14 @@ class SignUpState {
         errorText: 'At least one uppercase letter',
       ),
       PatternValidator(
+        r'([a-z]+)',
+        errorText: 'At least one lowercase letter',
+      ),
+      PatternValidator(
+        r'([1-9]+)',
+        errorText: 'At least one number',
+      ),
+      PatternValidator(
         r'(?=.*?[#?!@$%^&*-])',
         errorText: 'At least one special character',
       ),
