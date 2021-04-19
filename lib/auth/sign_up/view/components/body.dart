@@ -69,17 +69,6 @@ class Body extends StatelessWidget {
                 ),
                 SizedBox(height: getProportionateScreenHeight(50)),
                 SignUpForm(),
-                ElevatedButton(
-                    onPressed: () {
-                      toast(
-                        context: context,
-                        text: 'lorem iposum nevade sigman gg',
-                        backgroundColor: kErrorColor,
-                        textColor: Colors.white,
-                        iconColor: Colors.white,
-                      );
-                    },
-                    child: Container()),
                 SizedBox(height: getProportionateScreenHeight(25)),
                 CentralDivider(
                   text: 'Or continue with',

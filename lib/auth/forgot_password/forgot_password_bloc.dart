@@ -31,7 +31,7 @@ class ForgotPasswordBloc
         authCubit.showResetPassword();
         yield state.copyWith(formSubmissionStatus: SubmissionSuccess());
       } catch (e) {
-        yield state.copyWith(formSubmissionStatus: SubmissionFailure(e));
+        yield state.copyWith(formSubmissionStatus: SubmissionFailure());
       }
     }
   }

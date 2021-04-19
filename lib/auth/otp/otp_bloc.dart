@@ -78,7 +78,7 @@ class OtpBloc extends Bloc<OtpEvent, OtpState> {
           errorMessage = 'An unknown error had occurred. Please try again.';
         }
         yield state.copyWith(
-          formSubmissionStatus: SubmissionFailure(e),
+          formSubmissionStatus: SubmissionFailure(),
           errorMessage: errorMessage,
         );
         yield state.copyWith(formSubmissionStatus: InitialFormStatus());

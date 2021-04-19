@@ -61,31 +61,28 @@ class AuthRepository {
 
   Future<User> login({String email, String password}) async {
     _cognitoUser = CognitoUser(email, _userPool, storage: _userPool.storage);
-
     final authDetails = AuthenticationDetails(
       username: email,
       password: password,
     );
 
-    bool isVerified;
     try {
       _session = await _cognitoUser.authenticateUser(authDetails);
-      isVerified = true;
-    } on CognitoClientException catch (e) {
-      if (e.code == 'UserNotConfirmedException') {
-        isVerified = false;
-      } else {
+    } catch (e) {
+      if (e.code != 'UserNotConfirmedException') {
         rethrow;
       }
     }
 
-    if (!_session.isValid()) {
+    if (_session == null) {
+      // When user is authenticated and not verified, session is null
+      return User(email: email);
+    } else if (!_session.isValid()) {
       return null;
     }
 
     final attributes = await _cognitoUser.getUserAttributes();
     final user = User.fromUserAttributes(attributes);
-    user.verified = isVerified;
 
     return user;
   }

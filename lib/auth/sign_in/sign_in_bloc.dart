@@ -29,14 +29,24 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
 
     if (event is LoginSubmitted) {
       yield state.copyWith(formSubmissionStatus: SubmissionInProgress());
-
       try {
         User user = await authRepo.login(
           email: state.email,
           password: state.password,
         );
-        yield state.copyWith(formSubmissionStatus: SubmissionSuccess());
-        authCubit.launchSession(user: user);
+
+        if (!user.verified) {
+          yield state.copyWith(
+            formSubmissionStatus: SubmissionFailure(),
+            errorMessage: 'Please verify your email account.',
+          );
+          user.password = state.password;
+          authRepo.resendConfirmationEmail(email: state.email);
+          authCubit.showEmailVerificationOtp(user: user);
+        } else {
+          yield state.copyWith(formSubmissionStatus: SubmissionSuccess());
+          authCubit.launchSession(user: user);
+        }
       } catch (e) {
         String errorMessage;
         if (e.code == 'InvalidParameterException' ||
@@ -48,7 +58,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
           errorMessage = 'An unknown error had occurred. Please try again.';
         }
         yield state.copyWith(
-          formSubmissionStatus: SubmissionFailure(e),
+          formSubmissionStatus: SubmissionFailure(),
           errorMessage: errorMessage,
         );
         yield state.copyWith(formSubmissionStatus: InitialFormStatus());
