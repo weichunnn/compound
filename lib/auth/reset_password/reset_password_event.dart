@@ -20,6 +20,4 @@ class ObscurePassword extends ResetPasswordEvent {
   ObscurePassword({this.obscurePassword});
 }
 
-class ResetPasswordResetForm extends ResetPasswordEvent {}
-
 class ResetPasswordSubmitted extends ResetPasswordEvent {}

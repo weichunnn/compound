@@ -6,7 +6,6 @@ import '../../../../constants.dart';
 import '../../../../size_config.dart';
 import '../../../form_submission_status.dart';
 import '../../otp_bloc.dart';
-import '../../otp_event.dart';
 import '../../otp_state.dart';
 import 'otp_form.dart';
 import '../../../../components/loader.dart';
@@ -41,7 +40,6 @@ class Body extends StatelessWidget {
             textColor: Colors.white,
             iconColor: Colors.white,
           );
-          context.read<OtpBloc>().add(OtpResetForm());
         }
       },
       child: SafeArea(

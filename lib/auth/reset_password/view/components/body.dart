@@ -7,7 +7,6 @@ import '../../../../auth/reset_password/view/components/reset_password_form.dart
 import '../../../../components/normal_template.dart';
 import '../../../form_submission_status.dart';
 import '../../reset_password_bloc.dart';
-import '../../reset_password_event.dart';
 import '../../reset_password_state.dart';
 import '../../../../components/loader.dart';
 import '../../../../components/toast.dart';
@@ -41,7 +40,6 @@ class Body extends StatelessWidget {
             textColor: Colors.white,
             iconColor: Colors.white,
           );
-          context.read<ResetPasswordBloc>().add(ResetPasswordResetForm());
         }
       },
       child: SafeArea(

@@ -9,12 +9,11 @@ import '../../../../size_config.dart';
 import '../../../auth_navigation/auth_cubit.dart';
 import '../../../form_submission_status.dart';
 import '../../sign_up_bloc.dart';
-import '../../sign_up_event.dart';
 import '../../sign_up_state.dart';
 import 'sign_up_form.dart';
 import '../../../../components/central_divider.dart';
 import '../../../../components/social_card.dart';
-import '../../../../components/app_loader.dart';
+import '../../../../components/loader.dart';
 import '../../../../components/toast.dart';
 
 class Body extends StatelessWidget {
@@ -46,7 +45,6 @@ class Body extends StatelessWidget {
             textColor: Colors.white,
             iconColor: Colors.white,
           );
-          context.read<SignUpBloc>().add(SignUpResetForm());
         }
       },
       child: SafeArea(

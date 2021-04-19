@@ -15,10 +15,6 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
 
   @override
   Stream<LoginState> mapEventToState(LoginEvent event) async* {
-    if (event is LoginResetForm) {
-      yield state.copyWith(formSubmissionStatus: InitialFormStatus());
-    }
-
     if (event is LoginEmailChanged) {
       yield state.copyWith(email: event.email);
     }
@@ -55,6 +51,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
           formSubmissionStatus: SubmissionFailure(e),
           errorMessage: errorMessage,
         );
+        yield state.copyWith(formSubmissionStatus: InitialFormStatus());
       }
     }
   }

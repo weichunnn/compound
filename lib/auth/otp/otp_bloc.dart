@@ -23,10 +23,6 @@ class OtpBloc extends Bloc<OtpEvent, OtpState> {
 
   @override
   Stream<OtpState> mapEventToState(OtpEvent event) async* {
-    if (event is OtpResetForm) {
-      yield state.copyWith(formSubmissionStatus: InitialFormStatus());
-    }
-
     if (event is Tick) {
       yield state.copyWith(countdown: event.duration);
       if (event.duration > 0) {
@@ -85,6 +81,7 @@ class OtpBloc extends Bloc<OtpEvent, OtpState> {
           formSubmissionStatus: SubmissionFailure(e),
           errorMessage: errorMessage,
         );
+        yield state.copyWith(formSubmissionStatus: InitialFormStatus());
       }
     }
   }

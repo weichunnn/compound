@@ -16,10 +16,6 @@ class ResetPasswordBloc extends Bloc<ResetPasswordEvent, ResetPasswordState> {
   @override
   Stream<ResetPasswordState> mapEventToState(ResetPasswordEvent event) async* {
     if (event is ResetPasswordOtpChanged) {
-      yield state.copyWith(formSubmissionStatus: InitialFormStatus());
-    }
-
-    if (event is ResetPasswordOtpChanged) {
       yield state.copyWith(otp: event.otp);
     }
 
@@ -56,6 +52,7 @@ class ResetPasswordBloc extends Bloc<ResetPasswordEvent, ResetPasswordState> {
           formSubmissionStatus: SubmissionFailure(e),
           errorMessage: errorMessage,
         );
+        yield state.copyWith(formSubmissionStatus: InitialFormStatus());
       }
     }
   }

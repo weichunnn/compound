@@ -15,10 +15,6 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
 
   @override
   Stream<SignUpState> mapEventToState(SignUpEvent event) async* {
-    if (event is SignUpResetForm) {
-      yield state.copyWith(formSubmissionStatus: InitialFormStatus());
-    }
-
     if (event is SignUpEmailChanged) {
       yield state.copyWith(email: event.email);
     }
@@ -59,6 +55,7 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
           formSubmissionStatus: SubmissionFailure(e),
           errorMessage: errorMessage,
         );
+        yield state.copyWith(formSubmissionStatus: InitialFormStatus());
       }
     }
   }

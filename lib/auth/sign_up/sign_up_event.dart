@@ -20,6 +20,4 @@ class ObscurePassword extends SignUpEvent {
   ObscurePassword({this.obscurePassword});
 }
 
-class SignUpResetForm extends SignUpEvent {}
-
 class SignUpSubmitted extends SignUpEvent {}
