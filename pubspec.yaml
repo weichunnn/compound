@@ -36,10 +36,17 @@ dependencies:
   pinput: ^1.1.0
   provider: ^5.0.0
   shared_preferences: ^2.0.5
+  flutter_native_splash:
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+
+flutter_native_splash: 
+  color: "#545BEA"
+  android: true
+  ios: true
+  web: false
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
