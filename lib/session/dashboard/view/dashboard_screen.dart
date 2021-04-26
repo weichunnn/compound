@@ -1,0 +1,89 @@
+import 'package:compound/constants.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../../size_config.dart';
+import '../../../app_navigation/session_cubit.dart';
+
+class DashboardScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    // Initialization for Sizing Configs
+    SizeConfig().init(context);
+    return Scaffold(
+      body: SizedBox(
+        width: double.infinity,
+        child: CustomPaint(
+          size: Size(
+            SizeConfig.screenWidth,
+            SizeConfig.screenHeight,
+          ),
+          painter: BackgroundPainter(),
+          child: SafeArea(
+            minimum: EdgeInsets.only(left: 35, right: 35),
+            child: SingleChildScrollView(
+              child: Container(
+                height: SizeConfig.screenHeight,
+                child: Column(
+                  children: [
+                    Spacer(),
+                    Text(
+                      'Welcome View',
+                      style: TextStyle(
+                        fontSize: getProportionateScreenHeight(16),
+                      ),
+                    ),
+                    ElevatedButton.icon(
+                      onPressed: () {
+                        BlocProvider.of<SessionCubit>(context).signOut();
+                      },
+                      icon: Icon(Icons.logout),
+                      label: Text(
+                        'Sign Out',
+                        style: TextStyle(
+                          fontSize: getProportionateScreenHeight(16),
+                        ),
+                      ),
+                    ),
+                    Spacer(),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class BackgroundPainter extends CustomPainter {
+  final double _kCurveHeight = 25;
+  final topHeight = getProportionateScreenHeight(275);
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final path = Path();
+    path.lineTo(0, topHeight - _kCurveHeight);
+    path.relativeQuadraticBezierTo(
+        size.width / 2, 2 * _kCurveHeight, size.width, 0);
+    path.lineTo(size.width, 0);
+    path.close();
+    var rect = Offset.zero & size;
+    var paint = Paint()
+      ..shader = LinearGradient(
+        begin: Alignment.centerRight,
+        end: Alignment.centerLeft,
+        colors: [
+          kPrimaryColor,
+          kSecondaryColor,
+        ],
+      ).createShader(rect);
+    canvas.drawPath(path, paint);
+  }
+
+  @override
+  bool shouldRepaint(CustomPainter oldDelegate) {
+    return false;
+  }
+}
