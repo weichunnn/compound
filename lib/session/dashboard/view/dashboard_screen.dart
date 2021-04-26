@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../size_config.dart';
 import '../../../app_navigation/session_cubit.dart';
+import '../../../components/bottom_nav_bar.dart';
 
 class DashboardScreen extends StatelessWidget {
   @override
@@ -11,6 +12,7 @@ class DashboardScreen extends StatelessWidget {
     // Initialization for Sizing Configs
     SizeConfig().init(context);
     return Scaffold(
+      bottomNavigationBar: BottomNavBar(),
       body: SizedBox(
         width: double.infinity,
         child: CustomPaint(
@@ -55,6 +57,29 @@ class DashboardScreen extends StatelessWidget {
       ),
     );
   }
+}
+
+Widget bottomNavigationBar() {
+  return Container(
+    decoration: BoxDecoration(
+      color: Colors.amber,
+      borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(25), topRight: Radius.circular(25)),
+    ),
+    child: BottomNavigationBar(
+      backgroundColor: Colors.transparent,
+      showUnselectedLabels: true,
+      type: BottomNavigationBarType.fixed,
+      elevation: 0,
+      items: [
+        BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
+        BottomNavigationBarItem(
+            icon: Icon(Icons.local_activity), label: 'Activity'),
+        BottomNavigationBarItem(icon: Icon(Icons.inbox), label: 'Inbox'),
+        BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
+      ],
+    ),
+  );
 }
 
 class BackgroundPainter extends CustomPainter {
