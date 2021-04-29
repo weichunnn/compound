@@ -1,7 +1,7 @@
-import 'package:compound/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../constants.dart';
 import '../../../size_config.dart';
 import '../../../app_navigation/session_cubit.dart';
 import '../../../components/bottom_nav_bar.dart';
