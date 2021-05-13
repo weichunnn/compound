@@ -1,23 +1,28 @@
+import 'package:flutter/material.dart';
+
 import 'package:badges/badges.dart';
 import 'package:easy_rich_text/easy_rich_text.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../constants.dart';
 import '../../../size_config.dart';
 import '../../../app_navigation/session_cubit.dart';
 import '../../../components/bottom_nav_bar.dart';
+import '../dashboard_bloc.dart';
+import '../../../authenticated_session/dashboard/dashboard_event.dart';
+import '../../../authenticated_session/dashboard/dashboard_state.dart';
+import '../../../authenticated_session/dashboard/view/components/overview_chart.dart';
+import '../../../components/card_options.dart';
 
 class DashboardScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    int counter = 0;
     // Initialization for Sizing Configs
     SizeConfig().init(context);
     return Scaffold(
       bottomNavigationBar: BottomNavBar(),
-      body: SizedBox(
-        width: double.infinity,
+      body: BlocProvider<DashboardBloc>(
+        create: (context) => DashboardBloc(),
         child: CustomPaint(
           size: Size(
             SizeConfig.screenWidth,
@@ -64,37 +69,123 @@ class DashboardScreen extends StatelessWidget {
                             )
                           ],
                         ),
-                        Padding(
-                          padding: EdgeInsets.symmetric(
-                            horizontal: getProportionateScreenWidth(10),
-                          ),
-                          child: counter != 0
-                              ? Badge(
-                                  toAnimate: false,
-                                  padding:
-                                      EdgeInsets.all(counter < 10 ? 7.5 : 5),
-                                  position: BadgePosition.topEnd(end: -5),
-                                  badgeContent: Text(
-                                    counter.toString(),
-                                    style: TextStyle(
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.bold,
+                        BlocBuilder<DashboardBloc, DashboardState>(
+                          builder: (BuildContext context, state) {
+                            final counter = state.counter;
+                            return Padding(
+                              padding: EdgeInsets.symmetric(
+                                horizontal: getProportionateScreenWidth(10),
+                              ),
+                              child: counter == 0
+                                  ? Icon(
+                                      Icons.notifications,
                                       color: Colors.white,
+                                      size: getProportionateScreenHeight(30),
+                                    )
+                                  : Badge(
+                                      toAnimate: false,
+                                      padding: EdgeInsets.all(counter < 10 ? 7.5 : 5),
+                                      position: BadgePosition.topEnd(end: -5),
+                                      badgeContent: Text(
+                                        counter.toString(),
+                                        style: TextStyle(
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                      child: Icon(
+                                        Icons.notifications,
+                                        color: Colors.white,
+                                        size: getProportionateScreenHeight(30),
+                                      ),
                                     ),
-                                  ),
-                                  child: Icon(
-                                    Icons.notifications,
-                                    color: Colors.white,
-                                    size: getProportionateScreenHeight(30),
-                                  ),
-                                )
-                              : Icon(
-                                  Icons.notifications,
-                                  color: Colors.white,
-                                  size: getProportionateScreenHeight(30),
-                                ),
+                            );
+                          },
                         ),
                       ],
+                    ),
+                    SizedBox(height: getProportionateScreenHeight(20)),
+                    Card(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                      elevation: 5,
+                      child: Container(
+                        padding: EdgeInsets.all(
+                          getProportionateScreenHeight(10),
+                        ),
+                        child: Column(
+                          children: [
+                            Container(
+                              child: Row(
+                                children: [
+                                  Padding(
+                                    padding: EdgeInsets.only(right: getProportionateScreenWidth(15)),
+                                    child: Text(
+                                      'Overview',
+                                      style: TextStyle(
+                                        fontSize: getProportionateScreenHeight(16),
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: BlocBuilder<DashboardBloc, DashboardState>(builder: (context, state) {
+                                      return Wrap(
+                                        alignment: WrapAlignment.spaceBetween,
+                                        children: List.generate(
+                                          state.overviewTypeSelection.length,
+                                          (index) {
+                                            return CardOptions(
+                                              text: state.overviewTypeSelection[index],
+                                              selected: state.overviewTypeSelected,
+                                              onPressed: () {
+                                                context.read<DashboardBloc>().add(
+                                                      OverviewTypeSelected(
+                                                        selectedText: state.overviewTypeSelection[index],
+                                                      ),
+                                                    );
+                                              },
+                                            );
+                                          },
+                                        ),
+                                      );
+                                    }),
+                                  )
+                                ],
+                              ),
+                            ),
+                            OverviewChart(),
+                            Container(
+                              width: double.infinity,
+                              child: BlocBuilder<DashboardBloc, DashboardState>(
+                                builder: (BuildContext context, state) {
+                                  return Wrap(
+                                    alignment: WrapAlignment.spaceBetween,
+                                    children: List.generate(
+                                      state.overviewTimeSelection.length,
+                                      (index) {
+                                        return CardOptions(
+                                          text: state.overviewTimeSelection[index],
+                                          selected: state.overviewTimeSelected,
+                                          onPressed: () {
+                                            context.read<DashboardBloc>().add(
+                                                  OverviewTimeSelected(
+                                                    selectedText: state.overviewTimeSelection[index],
+                                                  ),
+                                                );
+                                          },
+                                        );
+                                      },
+                                    ),
+                                  );
+                                },
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
                     ),
                     Spacer(),
                     Text(
@@ -135,8 +226,7 @@ class BackgroundPainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     final path = Path();
     path.lineTo(0, topHeight - _kCurveHeight);
-    path.relativeQuadraticBezierTo(
-        size.width / 2, 2 * _kCurveHeight, size.width, 0);
+    path.relativeQuadraticBezierTo(size.width / 2, 2 * _kCurveHeight, size.width, 0);
     path.lineTo(size.width, 0);
     path.close();
     var rect = Offset.zero & size;

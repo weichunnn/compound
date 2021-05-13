@@ -15,5 +15,6 @@ const kTextColor = Color(0xFF525252);
 const kGreyColor = Color(0xFFC4C4C4);
 const kErrorColor = Color(0xFFFF003D);
 const kSuccessColor = Color(0xFF47E6B1);
+const kOptionsColor = Color(0xFFEBEFF3);
 
 const kAnimationDuration = Duration(milliseconds: 250);
