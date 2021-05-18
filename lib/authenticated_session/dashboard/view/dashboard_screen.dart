@@ -156,7 +156,10 @@ class DashboardScreen extends StatelessWidget {
                                 ],
                               ),
                             ),
-                            OverviewChart(),
+                            Container(
+                              height: getProportionateScreenHeight(200),
+                              child: OverviewChart(),
+                            ),
                             Container(
                               width: double.infinity,
                               child: BlocBuilder<DashboardBloc, DashboardState>(
