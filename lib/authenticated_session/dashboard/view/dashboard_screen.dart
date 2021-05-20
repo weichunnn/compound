@@ -24,13 +24,24 @@ class DashboardScreen extends StatelessWidget {
       bottomNavigationBar: BottomNavBar(),
       body: BlocProvider<DashboardBloc>(
         create: (context) => DashboardBloc(),
-        child: CustomPaint(
-          size: Size(
-            SizeConfig.screenWidth,
-            SizeConfig.screenHeight,
+        child: Stack(children: [
+          Container(
+            height: getProportionateScreenHeight(275),
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.centerRight,
+                end: Alignment.centerLeft,
+                colors: [
+                  kPrimaryColor,
+                  kSecondaryColor,
+                ],
+              ),
+              borderRadius: BorderRadius.vertical(
+                bottom: Radius.elliptical(SizeConfig.screenWidth, getProportionateScreenHeight(50)),
+              ),
+            ),
           ),
-          painter: BackgroundPainter(),
-          child: SafeArea(
+          SafeArea(
             minimum: EdgeInsets.symmetric(horizontal: 20),
             child: SingleChildScrollView(
               child: Container(
@@ -218,38 +229,8 @@ class DashboardScreen extends StatelessWidget {
               ),
             ),
           ),
-        ),
+        ]),
       ),
     );
-  }
-}
-
-class BackgroundPainter extends CustomPainter {
-  final double _kCurveHeight = 25;
-  final topHeight = getProportionateScreenHeight(275);
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    final path = Path();
-    path.lineTo(0, topHeight - _kCurveHeight);
-    path.relativeQuadraticBezierTo(size.width / 2, 2 * _kCurveHeight, size.width, 0);
-    path.lineTo(size.width, 0);
-    path.close();
-    var rect = Offset.zero & size;
-    var paint = Paint()
-      ..shader = LinearGradient(
-        begin: Alignment.centerRight,
-        end: Alignment.centerLeft,
-        colors: [
-          kPrimaryColor,
-          kSecondaryColor,
-        ],
-      ).createShader(rect);
-    canvas.drawPath(path, paint);
-  }
-
-  @override
-  bool shouldRepaint(CustomPainter oldDelegate) {
-    return false;
   }
 }
