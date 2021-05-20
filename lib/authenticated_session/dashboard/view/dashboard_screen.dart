@@ -13,6 +13,7 @@ import '../../../authenticated_session/dashboard/dashboard_event.dart';
 import '../../../authenticated_session/dashboard/dashboard_state.dart';
 import '../../../authenticated_session/dashboard/view/components/overview_chart.dart';
 import '../../../components/card_options.dart';
+import '../../../authenticated_session/dashboard/view/components/accounts.dart';
 
 class DashboardScreen extends StatelessWidget {
   @override
@@ -190,6 +191,8 @@ class DashboardScreen extends StatelessWidget {
                         ),
                       ),
                     ),
+                    Spacer(),
+                    Accounts(),
                     Spacer(),
                     Text(
                       'Welcome View',
