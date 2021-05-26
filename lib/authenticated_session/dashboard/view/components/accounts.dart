@@ -68,6 +68,10 @@ class AccountsCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String formattedAmount = amount < 0
+        ? '- \$ ' + numberFormat.format(amount * -1).toString()
+        : '\$ ' + numberFormat.format(amount).toString();
+
     return Container(
       padding: EdgeInsets.symmetric(
         vertical: getProportionateScreenHeight(10),
@@ -98,9 +102,7 @@ class AccountsCard extends StatelessWidget {
             ),
           ),
           Text(
-            amount < 0
-                ? '- \$ ' + numberFormat.format(amount * -1).toString()
-                : '\$ ' + numberFormat.format(amount).toString(),
+            formattedAmount,
             style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: getProportionateScreenHeight(14),
