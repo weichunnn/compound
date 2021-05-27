@@ -24,7 +24,6 @@ dependencies:
   flutter:
     sdk: flutter
   amazon_cognito_identity_dart_2: ^0.1.25+4
-  badges: ^1.2.0
   cupertino_icons: ^1.0.2
   easy_rich_text: ^0.5.3
   flash: ^1.5.1

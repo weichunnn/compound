@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:badges/badges.dart';
 import 'package:easy_rich_text/easy_rich_text.dart';
 
 import '../../../../size_config.dart';
@@ -44,34 +43,38 @@ class Header extends StatelessWidget {
         ),
         BlocBuilder<DashboardBloc, DashboardState>(
           builder: (BuildContext context, state) {
-            final counter = state.counter;
             return Padding(
               padding: EdgeInsets.symmetric(
                 horizontal: getProportionateScreenWidth(10),
               ),
-              child: counter == 0
+              child: state.counter == 0
                   ? Icon(
-                      Icons.notifications,
+                      Icons.notifications_none,
                       color: Colors.white,
                       size: getProportionateScreenHeight(30),
                     )
-                  : Badge(
-                      toAnimate: false,
-                      padding: EdgeInsets.all(counter < 10 ? 7.5 : 5),
-                      position: BadgePosition.topEnd(end: -5),
-                      badgeContent: Text(
-                        counter.toString(),
-                        style: TextStyle(
-                          fontSize: 15,
-                          fontWeight: FontWeight.bold,
+                  : Stack(
+                      children: [
+                        Icon(
+                          Icons.notifications,
                           color: Colors.white,
+                          size: getProportionateScreenHeight(30),
                         ),
-                      ),
-                      child: Icon(
-                        Icons.notifications,
-                        color: Colors.white,
-                        size: getProportionateScreenHeight(30),
-                      ),
+                        Positioned(
+                          right: 0,
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: Colors.red,
+                              borderRadius: BorderRadius.circular(50),
+                            ),
+                            // Text child can be inserted and badge will expand as text size increases
+                            constraints: BoxConstraints(
+                              minWidth: getProportionateScreenHeight(15),
+                              minHeight: getProportionateScreenHeight(15),
+                            ),
+                          ),
+                        )
+                      ],
                     ),
             );
           },
