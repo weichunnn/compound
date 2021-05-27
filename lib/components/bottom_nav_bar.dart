@@ -13,19 +13,18 @@ class BottomNavBar extends StatelessWidget {
         color: Colors.white,
         boxShadow: [
           BoxShadow(
-            blurRadius: 20,
-            color: Colors.black.withOpacity(.1),
+            color: Colors.grey.withOpacity(0.5),
+            blurRadius: 5,
           )
         ],
       ),
-      padding: EdgeInsets.symmetric(
-        horizontal: getProportionateScreenWidth(15),
-        vertical: getProportionateScreenHeight(10),
+      padding: EdgeInsets.all(
+        getProportionateScreenHeight(15),
       ),
       child: GNav(
-        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+        padding: EdgeInsets.all(getProportionateScreenHeight(12.5)),
         rippleColor: kPrimaryColor.withOpacity(0.5),
-        gap: getProportionateScreenWidth(15),
+        gap: getProportionateScreenWidth(10),
         activeColor: kPrimaryColor,
         iconSize: getProportionateScreenWidth(25),
         tabBackgroundColor: kPrimaryColor.withOpacity(0.20),
