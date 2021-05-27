@@ -9,7 +9,7 @@ class SessionCubit extends Cubit<SessionState> {
 
   SessionCubit({this.authRepo}) : super(UnknownSessionState()) {
     // if credentials are available, try to log in user in to session
-    Future.delayed(Duration(seconds: 2), () {
+    Future.delayed(Duration(milliseconds: 1000), () {
       attemptAutoLogin();
     });
   }

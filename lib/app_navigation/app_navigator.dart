@@ -1,3 +1,6 @@
+import 'package:compound/authenticated_session/authenticated_session_navigation/authenticated_session_cubit.dart';
+import 'package:compound/authenticated_session/authenticated_session_navigation/authenticated_session_navigator.dart';
+import 'package:compound/authenticated_session/loading_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -5,8 +8,6 @@ import 'session_cubit.dart';
 import 'session_state.dart';
 import '../welcome/welcome_navigation/welcome_cubit.dart';
 import '../welcome/welcome_navigation/welcome_navigator.dart';
-import '../session/session_view.dart';
-import '../session/loading_screen.dart';
 
 class AppNavigator extends StatelessWidget {
   @override
@@ -26,7 +27,14 @@ class AppNavigator extends StatelessWidget {
               ),
             ),
 
-          if (state is Authenticated) MaterialPage(child: SessionView()),
+          // Authenticated State -> Enter into Authenticated Session Flow
+          if (state is Authenticated)
+            MaterialPage(
+              child: BlocProvider<AuthenticatedSessionCubit>(
+                create: (context) => AuthenticatedSessionCubit(),
+                child: AuthenticatedSessionNavigator(),
+              ),
+            ),
         ],
         onPopPage: (route, result) => route.didPop(result),
       );
