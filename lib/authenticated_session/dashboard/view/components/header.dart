@@ -1,3 +1,4 @@
+import 'package:compound/authenticated_session/authenticated_session_navigation/authenticated_session_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:easy_rich_text/easy_rich_text.dart';
@@ -47,35 +48,40 @@ class Header extends StatelessWidget {
               padding: EdgeInsets.symmetric(
                 horizontal: getProportionateScreenWidth(10),
               ),
-              child: state.counter == 0
-                  ? Icon(
-                      Icons.notifications_none,
-                      color: Colors.white,
-                      size: getProportionateScreenHeight(30),
-                    )
-                  : Stack(
-                      children: [
-                        Icon(
-                          Icons.notifications,
-                          color: Colors.white,
-                          size: getProportionateScreenHeight(30),
-                        ),
-                        Positioned(
-                          right: 0,
-                          child: Container(
-                            decoration: BoxDecoration(
-                              color: Colors.red,
-                              borderRadius: BorderRadius.circular(50),
-                            ),
-                            // Text child can be inserted and badge will expand as text size increases
-                            constraints: BoxConstraints(
-                              minWidth: getProportionateScreenHeight(15),
-                              minHeight: getProportionateScreenHeight(15),
-                            ),
+              child: IconButton(
+                icon: state.counter == 0
+                    ? Icon(
+                        Icons.notifications_none,
+                        color: Colors.white,
+                        size: getProportionateScreenHeight(30),
+                      )
+                    : Stack(
+                        children: [
+                          Icon(
+                            Icons.notifications,
+                            color: Colors.white,
+                            size: getProportionateScreenHeight(30),
                           ),
-                        )
-                      ],
-                    ),
+                          Positioned(
+                            right: 0,
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: Colors.red,
+                                borderRadius: BorderRadius.circular(50),
+                              ),
+                              // Text child can be inserted and badge will expand as text size increases
+                              constraints: BoxConstraints(
+                                minWidth: getProportionateScreenHeight(15),
+                                minHeight: getProportionateScreenHeight(15),
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                onPressed: () {
+                  context.read<AuthenticatedSessionCubit>().showNotifications();
+                },
+              ),
             );
           },
         ),
