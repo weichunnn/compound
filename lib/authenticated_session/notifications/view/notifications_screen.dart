@@ -1,5 +1,6 @@
 import 'package:compound/authenticated_session/notifications/notifications_cubit.dart';
 import 'package:compound/authenticated_session/notifications/notifications_state.dart';
+import 'package:compound/components/toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -54,73 +55,83 @@ class NotificationsScreen extends StatelessWidget {
               ],
             ),
             child: SingleChildScrollView(
-              child: BlocBuilder<NotificationsCubit, NotificationsState>(
-                builder: (BuildContext context, state) {
-                  if (state is NotificationsInitial) {
-                    return Center(
-                      child: Text('Hi'),
+              child: BlocListener<NotificationsCubit, NotificationsState>(
+                listener: (BuildContext context, state) {
+                  if (state is NotificationsError) {
+                    toast(
+                      context: context,
+                      text: state.error,
+                      backgroundColor: kErrorColor,
+                      textColor: Colors.white,
+                      iconColor: Colors.white,
                     );
                   }
-                  return Column(
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Padding(
-                            padding: EdgeInsets.all(8.0),
-                            child: Text(
-                              'New',
-                              style: TextStyle(
-                                fontSize: getProportionateScreenHeight(16),
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black,
-                              ),
-                            ),
-                          ),
-                          Column(
-                            children: List.generate(
-                              4,
-                              (index) {
-                                return NotificationCard(
-                                  newUpdate: true,
-                                  text: 'Credit Installment is due in 3 days',
-                                  timeStamp: '10 minutes ago',
-                                );
-                              },
-                            ),
-                          )
-                        ],
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Padding(
-                            padding: EdgeInsets.all(getProportionateScreenHeight(7.5)),
-                            child: Text(
-                              'Earlier',
-                              style: TextStyle(
-                                fontSize: getProportionateScreenHeight(16),
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black,
-                              ),
-                            ),
-                          ),
-                          Column(
-                            children: List.generate(
-                              10,
-                              (index) {
-                                return NotificationCard(
-                                  text: 'Credit Installment is due in 3 days',
-                                  timeStamp: '10 minutes ago',
-                                );
-                              },
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  );
                 },
+                child: BlocBuilder<NotificationsCubit, NotificationsState>(
+                  builder: (BuildContext context, state) {
+                    if (state is NotificationsInitial || state is NotificationsLoading) {
+                      return Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    } else if (state is NotificationsLoaded) {
+                      return Column(
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Padding(
+                                padding: EdgeInsets.all(8.0),
+                                child: Text(
+                                  'New',
+                                  style: TextStyle(
+                                    fontSize: getProportionateScreenHeight(16),
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                              ),
+                              Column(
+                                  children: state.newUpdates
+                                      .map(
+                                        (noti) => NotificationCard(
+                                          text: noti['text'],
+                                          timeStamp: noti['timeStamp'],
+                                        ),
+                                      )
+                                      .toList()),
+                            ],
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Padding(
+                                padding: EdgeInsets.all(getProportionateScreenHeight(7.5)),
+                                child: Text(
+                                  'Earlier',
+                                  style: TextStyle(
+                                    fontSize: getProportionateScreenHeight(16),
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                              ),
+                              Column(
+                                  children: state.pastUpdates
+                                      .map(
+                                        (noti) => NotificationCard(
+                                          text: noti['text'],
+                                          timeStamp: noti['timeStamp'],
+                                        ),
+                                      )
+                                      .toList()),
+                            ],
+                          ),
+                        ],
+                      );
+                    }
+                    return Container();
+                  },
+                ),
               ),
             ),
           ),

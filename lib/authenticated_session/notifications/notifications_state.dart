@@ -7,8 +7,9 @@ class NotificationsInitial extends NotificationsState {}
 class NotificationsLoading extends NotificationsState {}
 
 class NotificationsLoaded extends NotificationsState {
-  final Map notifications;
-  NotificationsLoaded({this.notifications});
+  final List newUpdates;
+  final List pastUpdates;
+  NotificationsLoaded({this.newUpdates, this.pastUpdates});
 }
 
 class NotificationsError extends NotificationsState {
