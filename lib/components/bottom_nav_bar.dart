@@ -4,8 +4,42 @@ import 'package:line_icons/line_icons.dart';
 
 import '../constants.dart';
 import '../size_config.dart';
+import 'package:compound/authenticated_session/authenticated_session_navigation/authenticated_session_cubit.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-class BottomNavBar extends StatelessWidget {
+class BottomNavBar extends StatefulWidget {
+  const BottomNavBar({Key key}) : super(key: key);
+
+  @override
+  _BottomNavBarState createState() => _BottomNavBarState();
+}
+
+enum _SelectedTab { dashboard, monthly, discover, settings }
+
+class _BottomNavBarState extends State<BottomNavBar> {
+  var _selectedTab = _SelectedTab.dashboard;
+
+  void _handleIndexChanged(int i) {
+    var currentState = _SelectedTab.values[i];
+
+    setState(() {
+      _selectedTab = currentState;
+    });
+
+    switch (currentState) {
+      case _SelectedTab.dashboard:
+        context.read<AuthenticatedSessionCubit>().showDashboard();
+        break;
+      case _SelectedTab.monthly:
+        context.read<AuthenticatedSessionCubit>().showMonthly();
+        break;
+      case _SelectedTab.discover:
+        break;
+      case _SelectedTab.settings:
+        break;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -31,6 +65,8 @@ class BottomNavBar extends StatelessWidget {
         color: Colors.black,
         curve: Curves.easeInOut,
         tabBorderRadius: 50,
+        selectedIndex: _SelectedTab.values.indexOf(_selectedTab),
+        onTabChange: _handleIndexChanged,
         tabs: [
           GButton(
             icon: LineIcons.home,
