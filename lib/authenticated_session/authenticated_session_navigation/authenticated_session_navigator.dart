@@ -5,7 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'authenticated_session_cubit.dart';
 import '../../authenticated_session/dashboard/view/dashboard_screen.dart';
 import '../notifications/view/notifications_screen.dart';
-import 'package:compound/authenticated_session/monthly/monthly_screen.dart';
+import 'package:compound/authenticated_session/monthly/view/monthly_screen.dart';
 
 class AuthenticatedSessionNavigator extends StatelessWidget {
   @override
@@ -15,7 +15,7 @@ class AuthenticatedSessionNavigator extends StatelessWidget {
       return Scaffold(
         bottomNavigationBar: restrictedState.contains(state) ? null : BottomNavBar(),
         body: Navigator(
-          // Material Page to return without scaffold as ascaffold is already defined at the top of tree to provide consistent Nav Bar
+          // Material Page to return without scaffold as scaffold is already defined at the top of tree to provide consistent Nav Bar
           pages: [
             if (state == AuthenticatedSessionState.dashboard) MaterialPage(child: DashboardScreen()),
             if (state == AuthenticatedSessionState.notifications) MaterialPage(child: NotificationsScreen()),

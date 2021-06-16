@@ -13,12 +13,14 @@ class SplashScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         leadingWidth: 100,
-        leading: LinkText(
-          text: 'Back',
-          onTap: () {
-            context.read<WelcomeCubit>().showWelcome();
-          },
-          fontSize: getProportionateScreenHeight(16),
+        leading: Center(
+          child: LinkText(
+            text: 'Back',
+            onTap: () {
+              context.read<WelcomeCubit>().showWelcome();
+            },
+            fontSize: getProportionateScreenHeight(16),
+          ),
         ),
       ),
       body: BlocProvider(

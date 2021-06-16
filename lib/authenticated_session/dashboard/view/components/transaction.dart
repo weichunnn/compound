@@ -1,12 +1,13 @@
-import 'package:compound/authenticated_session/dashboard/dashboard_bloc.dart';
-import 'package:compound/authenticated_session/dashboard/dashboard_state.dart';
-import 'package:compound/components/link_text.dart';
-import 'package:compound/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 
 import '../../../../size_config.dart';
+import '../../../../components/base_card.dart';
+import '../../../../authenticated_session/dashboard/dashboard_bloc.dart';
+import '../../../../authenticated_session/dashboard/dashboard_state.dart';
+import '../../../../components/link_text.dart';
+import '../../../../constants.dart';
 
 class Transaction extends StatelessWidget {
   @override
@@ -33,14 +34,10 @@ class Transaction extends StatelessWidget {
             ],
           ),
         ),
-        Card(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(15),
-          ),
-          elevation: 5,
-          child: Container(
-            padding: EdgeInsets.all(
-              getProportionateScreenHeight(10),
+        BaseCard(
+          body: Container(
+            padding: EdgeInsets.symmetric(
+              horizontal: getProportionateScreenWidth(10),
             ),
             child: BlocBuilder<DashboardBloc, DashboardState>(builder: (BuildContext context, state) {
               return Column(

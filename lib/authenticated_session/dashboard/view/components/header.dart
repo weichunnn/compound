@@ -1,4 +1,3 @@
-import 'package:compound/authenticated_session/authenticated_session_navigation/authenticated_session_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:easy_rich_text/easy_rich_text.dart';
@@ -6,6 +5,7 @@ import 'package:easy_rich_text/easy_rich_text.dart';
 import '../../../../size_config.dart';
 import '../../dashboard_bloc.dart';
 import '../../dashboard_state.dart';
+import '../../../authenticated_session_navigation/authenticated_session_cubit.dart';
 
 class Header extends StatelessWidget {
   @override

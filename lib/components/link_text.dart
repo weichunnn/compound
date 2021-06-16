@@ -17,16 +17,14 @@ class LinkText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: GestureDetector(
-        onTap: onTap,
-        child: Text(
-          text,
-          style: TextStyle(
-            fontSize: getProportionateScreenHeight(fontSize),
-            fontWeight: FontWeight.bold,
-            color: kPrimaryColor,
-          ),
+    return GestureDetector(
+      onTap: onTap,
+      child: Text(
+        text,
+        style: TextStyle(
+          fontSize: getProportionateScreenHeight(fontSize),
+          fontWeight: FontWeight.bold,
+          color: kPrimaryColor,
         ),
       ),
     );
