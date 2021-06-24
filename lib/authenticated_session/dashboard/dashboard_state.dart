@@ -2,11 +2,11 @@ import 'package:compound/auth/form_submission_status.dart';
 
 class DashboardState {
   final FormSubmissionStatus formSubmissionStatus;
-  final List overviewTimeSelected;
-  final List overviewTypeSelected;
+  final List<String> overviewTimeSelected;
+  final List<String> overviewTypeSelected;
   final int counter;
-  List overviewTimeSelection = ['1M', '3M', '6M', '1Y', 'YTD', 'All'];
-  List overviewTypeSelection = [
+  List<String> overviewTimeSelection = ['1M', '3M', '6M', '1Y', 'YTD', 'All'];
+  List<String> overviewTypeSelection = [
     'Net Worth',
     'Income',
     'Expenditures',
@@ -20,11 +20,11 @@ class DashboardState {
   ];
 
   List<Map<String, dynamic>> transactions = [
-    {'category': 'Food and Drinks', 'merchant': 'Tailor', 'amount': -125, 'date': 'Jan 10, 2001'},
-    {'category': 'Sport and Games', 'merchant': 'Forever Fitness', 'amount': -25, 'date': 'Jan 07, 2001'},
-    {'category': 'Income', 'merchant': 'Salary', 'amount': 200, 'date': 'Jan 03, 2001'},
-    {'category': 'Side Hustle', 'merchant': 'Etsy Dashboard', 'amount': -125, 'date': 'Jan 02, 2001'},
-    {'category': 'Sport and Games', 'merchant': 'Forever Fitness', 'amount': -25, 'date': 'Jan 01, 2001'},
+    {'category': 'Food and Drinks', 'merchant': 'Tailor', 'amount': -125, 'date': 'Jan 10'},
+    {'category': 'Sport and Games', 'merchant': 'Forever Fitness', 'amount': -25, 'date': 'Jan 07'},
+    {'category': 'Income', 'merchant': 'Salary', 'amount': 200, 'date': 'Jan 03'},
+    {'category': 'Side Hustle', 'merchant': 'Etsy Dashboard', 'amount': -125, 'date': 'Dec 02'},
+    {'category': 'Sport and Games', 'merchant': 'Forever Fitness', 'amount': -25, 'date': 'Aug 01'},
   ];
 
   DashboardState({
@@ -35,8 +35,8 @@ class DashboardState {
   });
   DashboardState copywith({
     FormSubmissionStatus formSubmissionStatus,
-    List overviewTimeSelected,
-    List overviewTypeSelected,
+    List<String> overviewTimeSelected,
+    List<String> overviewTypeSelected,
   }) {
     return DashboardState(
       formSubmissionStatus: formSubmissionStatus ?? this.formSubmissionStatus,

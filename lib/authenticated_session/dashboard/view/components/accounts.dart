@@ -92,13 +92,10 @@ class AccountsCard extends StatelessWidget {
             ),
             child: SvgPicture.asset(icon),
           ),
-          Padding(
-            padding: EdgeInsets.all(getProportionateScreenHeight(1)),
-            child: Text(
-              title,
-              style: TextStyle(
-                fontSize: getProportionateScreenHeight(14),
-              ),
+          Text(
+            title,
+            style: TextStyle(
+              fontSize: getProportionateScreenHeight(14),
             ),
           ),
           Text(

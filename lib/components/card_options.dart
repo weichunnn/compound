@@ -27,12 +27,9 @@ class CardOptions extends StatelessWidget {
       onPressed: onPressed,
       style: TextButton.styleFrom(
         minimumSize: Size(0, 0),
-        textStyle: selected.contains(text)
-            ? TextStyle(fontWeight: FontWeight.bold)
-            : TextStyle(),
+        textStyle: selected.contains(text) ? TextStyle(fontWeight: FontWeight.bold) : TextStyle(),
         animationDuration: kAnimationDuration,
-        backgroundColor:
-            selected.contains(text) ? kPrimaryColor : kOptionsColor,
+        backgroundColor: selected.contains(text) ? kPrimaryColor : kOptionsColor,
         primary: selected.contains(text) ? Colors.white : Colors.black,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10),
