@@ -82,6 +82,7 @@ class AccountsCard extends StatelessWidget {
         boxShadow: [kBoxShadow],
       ),
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Container(
             padding: EdgeInsets.all(getProportionateScreenWidth(10)),
@@ -91,13 +92,10 @@ class AccountsCard extends StatelessWidget {
             ),
             child: SvgPicture.asset(icon),
           ),
-          Padding(
-            padding: EdgeInsets.all(getProportionateScreenHeight(1)),
-            child: Text(
-              title,
-              style: TextStyle(
-                fontSize: getProportionateScreenHeight(14),
-              ),
+          Text(
+            title,
+            style: TextStyle(
+              fontSize: getProportionateScreenHeight(14),
             ),
           ),
           Text(

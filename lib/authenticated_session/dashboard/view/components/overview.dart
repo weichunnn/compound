@@ -5,86 +5,89 @@ import '../../../../size_config.dart';
 import '../../dashboard_bloc.dart';
 import '../../dashboard_event.dart';
 import '../../dashboard_state.dart';
-import '../../../../components/card_options.dart';
 import 'overview_chart.dart';
 import '../../../../components/base_card.dart';
+import '../../../../components/multi_select_chips.dart';
 
 class Overview extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BaseCard(
-      body: Column(
-        children: [
-          Container(
-            child: Row(
-              children: [
-                Padding(
-                  padding: EdgeInsets.only(right: getProportionateScreenWidth(15)),
-                  child: Text(
-                    'Overview',
-                    style: TextStyle(
-                      fontSize: getProportionateScreenHeight(16),
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
+      body: Padding(
+        padding: EdgeInsets.all(getProportionateScreenHeight(10)),
+        child: Column(
+          children: [
+            Container(
+              width: double.infinity,
+              child: Text(
+                'Overview',
+                style: TextStyle(
+                  fontSize: getProportionateScreenHeight(16),
+                  fontWeight: FontWeight.bold,
                 ),
-                Expanded(
-                  child: BlocBuilder<DashboardBloc, DashboardState>(builder: (context, state) {
-                    return Wrap(
-                      alignment: WrapAlignment.spaceBetween,
-                      children: List.generate(
-                        state.overviewTypeSelection.length,
-                        (index) {
-                          return CardOptions(
-                            text: state.overviewTypeSelection[index],
-                            selected: state.overviewTypeSelected,
-                            onPressed: () {
-                              context.read<DashboardBloc>().add(
-                                    OverviewTypeSelected(
-                                      selectedText: state.overviewTypeSelection[index],
-                                    ),
-                                  );
-                            },
-                          );
-                        },
-                      ),
-                    );
-                  }),
-                )
-              ],
+              ),
             ),
-          ),
-          Container(
-            height: getProportionateScreenHeight(200),
-            child: OverviewChart(),
-          ),
-          Container(
-            width: double.infinity,
-            child: BlocBuilder<DashboardBloc, DashboardState>(
-              builder: (BuildContext context, state) {
-                return Wrap(
-                  alignment: WrapAlignment.spaceBetween,
-                  children: List.generate(
-                    state.overviewTimeSelection.length,
-                    (index) {
-                      return CardOptions(
-                        text: state.overviewTimeSelection[index],
-                        selected: state.overviewTimeSelected,
-                        onPressed: () {
-                          context.read<DashboardBloc>().add(
-                                OverviewTimeSelected(
-                                  selectedText: state.overviewTimeSelection[index],
-                                ),
-                              );
-                        },
+            BlocBuilder<DashboardBloc, DashboardState>(builder: (context, state) {
+              return MultiSelectChip(
+                choicesList: state.overviewTypeSelection,
+                selectedChoices: state.overviewTypeSelected,
+                textSize: getProportionateScreenHeight(10),
+                onSelected: (selected) {
+                  context.read<DashboardBloc>().add(
+                        OverviewTypeSelected(
+                          selectedText: selected,
+                        ),
                       );
-                    },
-                  ),
-                );
-              },
+                },
+              );
+            }),
+            Container(
+              height: getProportionateScreenHeight(200),
+              child: OverviewChart(),
             ),
-          ),
-        ],
+            BlocBuilder<DashboardBloc, DashboardState>(builder: (context, state) {
+              return MultiSelectChip(
+                choicesList: state.overviewTimeSelection,
+                selectedChoices: state.overviewTimeSelected,
+                textSize: getProportionateScreenHeight(10),
+                padding: EdgeInsets.symmetric(horizontal: 5),
+                onSelected: (selected) {
+                  context.read<DashboardBloc>().add(
+                        OverviewTimeSelected(
+                          selectedText: selected,
+                        ),
+                      );
+                },
+              );
+            }),
+            // Container(
+            //   width: double.infinity,
+            //   child: BlocBuilder<DashboardBloc, DashboardState>(
+            //     builder: (BuildContext context, state) {
+            //       return Wrap(
+            //         alignment: WrapAlignment.spaceBetween,
+            //         children: List.generate(
+            //           state.overviewTimeSelection.length,
+            //           (index) {
+            //             return CardOptions(
+            //               text: state.overviewTimeSelection[index],
+            //               selected: state.overviewTimeSelected,
+            //               onPressed: () {
+            //                 context.read<DashboardBloc>().add(
+            //                       OverviewTimeSelected(
+            //                         selectedText: state.overviewTimeSelection[index],
+            //                       ),
+            //                     );
+            //               },
+            //             );
+            //           },
+            //         ),
+            //       );
+            //     },
+            //   ),
+            // ),
+          ],
+        ),
       ),
     );
   }

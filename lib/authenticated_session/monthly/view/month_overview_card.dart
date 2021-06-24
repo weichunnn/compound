@@ -70,7 +70,7 @@ class MonthOverview extends StatelessWidget {
               color: Colors.black,
             ),
           ),
-          Spacer(flex: 3),
+          Spacer(flex: 2),
           Align(
             alignment: Alignment.centerLeft,
             child: LinkText(

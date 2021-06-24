@@ -9,23 +9,25 @@ class MultiSelectChip extends StatelessWidget {
     this.choicesList,
     this.onSelected,
     this.textSize,
+    this.padding = const EdgeInsets.symmetric(horizontal: 7.5),
   }) : super(key: key);
 
   final List<String> choicesList;
   final List<String> selectedChoices;
   final Function onSelected;
   final double textSize;
+  final EdgeInsets padding;
 
   @override
   Widget build(BuildContext context) {
-    return Row(
+    return Wrap(
       children: choicesList.map(
         (item) {
           return Container(
-            padding: EdgeInsets.symmetric(horizontal: 12),
+            padding: padding,
             child: ChoiceChip(
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(15),
+                borderRadius: BorderRadius.circular(10),
               ),
               label: Text(item),
               labelStyle: TextStyle(

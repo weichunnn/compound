@@ -59,10 +59,10 @@ class UpcomingPaymentsCard extends StatelessWidget {
                         ) +
                         [
                           UpcomingPaymentBox(
-                            title: 'View More Details',
+                            title: 'View More',
                             time: '',
                             color: state.colors[3],
-                            onTap: () => print('HAHHAHAHA'),
+                            onTap: () {},
                           ),
                         ],
                   ),
@@ -107,16 +107,18 @@ class UpcomingPaymentBox extends StatelessWidget {
               style: TextStyle(
                 fontSize: getProportionateScreenHeight(14),
                 fontWeight: FontWeight.bold,
-                color: title == 'View More Details' ? Colors.white : kTextColor,
+                color: title == 'View More' ? Colors.white : kTextColor,
               ),
             ),
-            title == 'View More Details'
-                ? Align(
-                    alignment: Alignment.centerRight,
-                    child: Icon(
-                      Icons.arrow_forward,
-                      size: 20,
-                      color: Colors.white,
+            title == 'View More'
+                ? Expanded(
+                    child: Align(
+                      alignment: Alignment.bottomRight,
+                      child: Icon(
+                        Icons.arrow_forward,
+                        size: getProportionateScreenHeight(30),
+                        color: Colors.white,
+                      ),
                     ),
                   )
                 : Text(

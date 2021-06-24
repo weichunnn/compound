@@ -1,3 +1,4 @@
+import 'package:compound/components/colored_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
@@ -83,18 +84,13 @@ class TransactionCard extends StatelessWidget {
         : '\$ ' + numberFormat.format(amount).toString();
 
     return Container(
-      height: getProportionateScreenHeight(75),
       padding: EdgeInsets.symmetric(vertical: getProportionateScreenHeight(10)),
       child: Row(
         children: [
-          Container(
-            height: getProportionateScreenHeight(42),
-            width: getProportionateScreenWidth(42),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(15),
-              color: Colors.green,
-            ),
-            child: Icon(Icons.ac_unit),
+          ColoredIcon(
+            backgroundColor: Colors.cyan,
+            icon: Icons.access_alarm_sharp,
+            color: Colors.white,
           ),
           SizedBox(width: getProportionateScreenWidth(20)),
           Expanded(
@@ -103,7 +99,6 @@ class TransactionCard extends StatelessWidget {
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       Text(
                         category,
@@ -124,29 +119,27 @@ class TransactionCard extends StatelessWidget {
                     ],
                   ),
                 ),
-                Container(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      Text(
-                        formattedAmount,
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
-                          fontSize: getProportionateScreenHeight(14),
-                          color: amount < 0 ? kErrorColor : kSuccessColor,
-                          fontWeight: FontWeight.bold,
-                        ),
+                SizedBox(width: getProportionateScreenWidth(10)),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Text(
+                      formattedAmount,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                        fontSize: getProportionateScreenHeight(14),
+                        color: amount < 0 ? kErrorColor : kSuccessColor,
+                        fontWeight: FontWeight.bold,
                       ),
-                      Text(
-                        date,
-                        style: TextStyle(
-                          fontSize: getProportionateScreenHeight(14),
-                          color: Colors.black,
-                        ),
+                    ),
+                    Text(
+                      date,
+                      style: TextStyle(
+                        fontSize: getProportionateScreenHeight(14),
+                        color: Colors.black,
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ],
             ),
