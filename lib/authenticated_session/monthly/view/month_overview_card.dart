@@ -1,8 +1,10 @@
-import '../../../components/link_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../constants.dart';
 import '../../../size_config.dart';
+import '../../../components/link_text.dart';
+import '../../../authenticated_session/authenticated_session_navigation/authenticated_session_cubit.dart';
 
 class MonthOverview extends StatelessWidget {
   const MonthOverview({
@@ -32,7 +34,16 @@ class MonthOverview extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                IEOverview(title: 'Income', amount: '\$5,000', color: kSuccessColor),
+                GestureDetector(
+                  onTap: () {
+                    context.read<AuthenticatedSessionCubit>().showIncomeExpenditure();
+                  },
+                  child: IEOverview(
+                    title: 'Income',
+                    amount: '\$5,000',
+                    color: kSuccessColor,
+                  ),
+                ),
                 IEOverview(title: 'Expenditure', amount: '\$2,000', color: kErrorColor),
               ],
             ),

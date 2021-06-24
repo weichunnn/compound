@@ -5,7 +5,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'authenticated_session_cubit.dart';
 import '../../authenticated_session/dashboard/view/dashboard_screen.dart';
 import '../notifications/view/notifications_screen.dart';
-import 'package:compound/authenticated_session/monthly/view/monthly_screen.dart';
+import '../../authenticated_session/monthly/view/monthly_screen.dart';
+import '../../authenticated_session/income_expenditure/income_expenditure_screen.dart';
 
 class AuthenticatedSessionNavigator extends StatelessWidget {
   @override
@@ -20,6 +21,7 @@ class AuthenticatedSessionNavigator extends StatelessWidget {
             if (state == AuthenticatedSessionState.dashboard) MaterialPage(child: DashboardScreen()),
             if (state == AuthenticatedSessionState.notifications) MaterialPage(child: NotificationsScreen()),
             if (state == AuthenticatedSessionState.monthly) MaterialPage(child: MonthlyScreen()),
+            if (state == AuthenticatedSessionState.incomeExpenditure) MaterialPage(child: IncomeExpenditureScreen()),
           ],
           onPopPage: (route, result) => route.didPop(result),
         ),

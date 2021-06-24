@@ -83,11 +83,8 @@ class TransactionCard extends StatelessWidget {
         : '\$ ' + numberFormat.format(amount).toString();
 
     return Container(
-      padding: EdgeInsets.symmetric(
-        vertical: getProportionateScreenHeight(12),
-        horizontal: getProportionateScreenWidth(5),
-      ),
       height: getProportionateScreenHeight(75),
+      padding: EdgeInsets.symmetric(vertical: getProportionateScreenHeight(10)),
       child: Row(
         children: [
           Container(
@@ -128,7 +125,6 @@ class TransactionCard extends StatelessWidget {
                   ),
                 ),
                 Container(
-                  width: getProportionateScreenWidth(85),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.spaceAround,

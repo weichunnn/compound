@@ -82,7 +82,6 @@ class AccountsCard extends StatelessWidget {
         boxShadow: [kBoxShadow],
       ),
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Container(
             padding: EdgeInsets.all(getProportionateScreenWidth(10)),
