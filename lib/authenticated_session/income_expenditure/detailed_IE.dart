@@ -7,7 +7,10 @@ import '../../size_config.dart';
 class DetailedIE extends StatelessWidget {
   const DetailedIE({
     Key key,
+    this.budgetAvailable = false,
   }) : super(key: key);
+
+  final bool budgetAvailable;
 
   @override
   Widget build(BuildContext context) {
@@ -63,7 +66,7 @@ class DetailedIE extends StatelessWidget {
                         ),
                       ],
                     ),
-                    if (false)
+                    if (budgetAvailable)
                       Column(
                         children: [
                           SizedBox(
@@ -82,7 +85,7 @@ class DetailedIE extends StatelessWidget {
             ],
           ),
         ),
-        if (true)
+        if (!budgetAvailable)
           Divider(
             color: Colors.grey,
             thickness: 2.5,

@@ -1,6 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-enum AuthenticatedSessionState { dashboard, notifications, monthly, incomeExpenditure }
+enum AuthenticatedSessionState { dashboard, notifications, monthly, income, expenditure }
 
 class AuthenticatedSessionCubit extends Cubit<AuthenticatedSessionState> {
   AuthenticatedSessionCubit() : super(AuthenticatedSessionState.dashboard);
@@ -11,5 +11,7 @@ class AuthenticatedSessionCubit extends Cubit<AuthenticatedSessionState> {
 
   void showMonthly() => emit(AuthenticatedSessionState.monthly);
 
-  void showIncomeExpenditure() => emit(AuthenticatedSessionState.incomeExpenditure);
+  void showIncomeExpenditure({isIncome}) {
+    isIncome ? emit(AuthenticatedSessionState.income) : emit(AuthenticatedSessionState.expenditure);
+  }
 }

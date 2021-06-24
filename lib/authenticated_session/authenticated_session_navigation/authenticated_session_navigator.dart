@@ -21,7 +21,9 @@ class AuthenticatedSessionNavigator extends StatelessWidget {
             if (state == AuthenticatedSessionState.dashboard) MaterialPage(child: DashboardScreen()),
             if (state == AuthenticatedSessionState.notifications) MaterialPage(child: NotificationsScreen()),
             if (state == AuthenticatedSessionState.monthly) MaterialPage(child: MonthlyScreen()),
-            if (state == AuthenticatedSessionState.incomeExpenditure) MaterialPage(child: IncomeExpenditureScreen()),
+            if (state == AuthenticatedSessionState.income) MaterialPage(child: IncomeExpenditureScreen(isIncome: true)),
+            if (state == AuthenticatedSessionState.expenditure)
+              MaterialPage(child: IncomeExpenditureScreen(isIncome: false)),
           ],
           onPopPage: (route, result) => route.didPop(result),
         ),

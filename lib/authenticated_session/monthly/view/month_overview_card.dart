@@ -36,7 +36,7 @@ class MonthOverview extends StatelessWidget {
               children: [
                 GestureDetector(
                   onTap: () {
-                    context.read<AuthenticatedSessionCubit>().showIncomeExpenditure();
+                    context.read<AuthenticatedSessionCubit>().showIncomeExpenditure(isIncome: true);
                   },
                   child: IEOverview(
                     title: 'Income',
@@ -44,7 +44,16 @@ class MonthOverview extends StatelessWidget {
                     color: kSuccessColor,
                   ),
                 ),
-                IEOverview(title: 'Expenditure', amount: '\$2,000', color: kErrorColor),
+                GestureDetector(
+                  onTap: () {
+                    context.read<AuthenticatedSessionCubit>().showIncomeExpenditure(isIncome: false);
+                  },
+                  child: IEOverview(
+                    title: 'Expenditure',
+                    amount: '\$2,000',
+                    color: kErrorColor,
+                  ),
+                ),
               ],
             ),
           ),

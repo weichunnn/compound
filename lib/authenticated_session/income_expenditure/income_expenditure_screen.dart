@@ -13,12 +13,19 @@ import '../../authenticated_session/income_expenditure/income_expenditure_state.
 import '../../components/multi_select_chips.dart';
 
 class IncomeExpenditureScreen extends StatelessWidget {
-  final List detailedIncomeOptions = ['Categories', 'Transactions', 'Merchants'];
+  const IncomeExpenditureScreen({
+    Key key,
+    this.isIncome,
+  }) : super(key: key);
+
+  final bool isIncome;
+
   @override
   Widget build(BuildContext context) {
+    final List detailedIncomeOptions = ['Categories', 'Transactions', 'Merchants'];
     return Scaffold(
       appBar: AppBar(
-        title: Text('Income'),
+        title: Text(isIncome ? 'Income' : 'Expenditure'),
         leadingWidth: 75,
         leading: IconButton(
           icon: Icon(Icons.arrow_back_ios_rounded),
@@ -95,14 +102,15 @@ class IncomeExpenditureScreen extends StatelessWidget {
                             children: [
                               SizedBox(height: getProportionateScreenHeight(10)),
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Text(
-                                    'Detailed Income',
-                                    style: TextStyle(
-                                      fontSize: getProportionateScreenHeight(16),
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.bold,
+                                  Expanded(
+                                    child: Text(
+                                      isIncome ? 'Detailed Income' : 'Detailed Expenditure',
+                                      style: TextStyle(
+                                        fontSize: getProportionateScreenHeight(16),
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.bold,
+                                      ),
                                     ),
                                   ),
                                   TextButton(
@@ -162,7 +170,10 @@ class IncomeExpenditureScreen extends StatelessWidget {
                                 ],
                               ),
                               Column(
-                                children: List.generate(5, (index) => DetailedIE()),
+                                children: List.generate(
+                                  5,
+                                  (index) => DetailedIE(),
+                                ),
                               ),
                             ],
                           ),
